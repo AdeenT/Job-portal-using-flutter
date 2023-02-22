@@ -1,7 +1,14 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_and_signup/controllers/login_controller.dart';
 import 'package:flutter_application_1/login_and_signup/signup_page.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/saved_jobs_screen/view/saved_jobs_screen.dart';
 import 'package:get/get.dart';
+
+import '../screens/job_seeker_screens/profile_screen/view/profile_screen.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -9,13 +16,14 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = Get.size.height;
     return Scaffold(
       body: GetBuilder<LoginController>(
         builder: (controller) => SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 200,
+              SizedBox(
+                height: height * 0.27,
               ),
               const Text(
                 "Sign in to your account",
@@ -103,7 +111,9 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(CreateProfile());
+                    },
                     child: const Text(
                       "Sign in",
                       style:
@@ -142,12 +152,8 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text(
-                      "Google",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                    child: Image.network(
+                      "https://png.monster/wp-content/uploads/2020/11/Google-Amblem-7c49bdf3.png",
                     ),
                   ),
                 ),
