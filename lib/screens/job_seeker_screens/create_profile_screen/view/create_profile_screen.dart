@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
-import 'package:flutter_application_1/screens/job_seeker_screens/home_screen/view/home_screen.dart';
 import 'package:get/get.dart';
 
 class CreateProfile extends StatelessWidget {

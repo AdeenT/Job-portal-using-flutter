@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/profile_screen.dart';
 import 'package:get/get.dart';
 

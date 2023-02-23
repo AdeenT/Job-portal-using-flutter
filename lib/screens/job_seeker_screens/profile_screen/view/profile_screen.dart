@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/settings_screen/view/settings_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -31,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.blue.withOpacity(0.65),
             ),
             onPressed: () {
-              // do somethin
+              Get.to(SettingsScreen());
             },
           )
         ],

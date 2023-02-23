@@ -3,12 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_and_signup/controllers/login_controller.dart';
 import 'package:flutter_application_1/login_and_signup/signup_page.dart';
-import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
-import 'package:flutter_application_1/screens/job_seeker_screens/saved_jobs_screen/view/saved_jobs_screen.dart';
 import 'package:get/get.dart';
 
-import '../screens/job_seeker_screens/profile_screen/view/profile_screen.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
