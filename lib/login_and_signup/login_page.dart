@@ -6,7 +6,6 @@ import 'package:flutter_application_1/login_and_signup/signup_page.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
 import 'package:get/get.dart';
 
-
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final controller = Get.put(LoginController());
@@ -170,16 +169,17 @@ class LoginPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 3),
                   TextButton(
-                      onPressed: () {
-                        Get.to(const SignUpPage());
-                      },
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ))
+                    onPressed: () {
+                      Get.to(const SignUpPage());
+                    },
+                    child: const Text(
+                      "Sign up",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
                 ],
               )
             ],

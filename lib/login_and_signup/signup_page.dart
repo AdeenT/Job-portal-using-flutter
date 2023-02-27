@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/profile_screen.dart';
 import 'package:get/get.dart';
 
@@ -109,10 +110,10 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(ProfileScreen());
+                      Get.to(NavBar());
                     },
                     child: const Text(
-                      "Sign in",
+                      "Sign up",
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
@@ -149,12 +150,8 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text(
-                      "Google",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                    child:  Image.network(
+                      "https://png.monster/wp-content/uploads/2020/11/Google-Amblem-7c49bdf3.png",
                     ),
                   ),
                 ),
@@ -172,13 +169,13 @@ class SignUpPage extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(width: width * 0.03),
+                  SizedBox(width: width * 0.02),
                   TextButton(
                     onPressed: () {
                       Get.to(LoginPage());
                     },
                     child: const Text(
-                      "Sign up",
+                      "Sign in",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
