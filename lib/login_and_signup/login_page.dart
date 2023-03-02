@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_and_signup/controllers/login_controller.dart';
 import 'package:flutter_application_1/login_and_signup/signup_page.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
+import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
@@ -108,7 +109,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(CreateProfile());
+                      Get.to(SelectionScreen());
                     },
                     child: const Text(
                       "Sign in",
@@ -147,7 +148,9 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.googleLogin();
+                    },
                     child: Image.network(
                       "https://png.monster/wp-content/uploads/2020/11/Google-Amblem-7c49bdf3.png",
                     ),
@@ -170,7 +173,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(width: 3),
                   TextButton(
                     onPressed: () {
-                      Get.to(const SignUpPage());
+                      Get.to( SignUpPage());
                     },
                     child: const Text(
                       "Sign up",

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/login_and_signup/controllers/login_controller.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/profile_screen.dart';
 import 'package:get/get.dart';
@@ -8,8 +9,8 @@ import 'package:get/get.dart';
 import 'login_page.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
-
+  SignUpPage({super.key});
+  final controller = LoginController();
   @override
   Widget build(BuildContext context) {
     final width = Get.size.width;
@@ -149,8 +150,10 @@ class SignUpPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () {},
-                    child:  Image.network(
+                    onPressed: () {
+                      controller.googleLogin();
+                    },
+                    child: Image.network(
                       "https://png.monster/wp-content/uploads/2020/11/Google-Amblem-7c49bdf3.png",
                     ),
                   ),
