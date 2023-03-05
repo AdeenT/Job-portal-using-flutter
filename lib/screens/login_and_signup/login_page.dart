@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login_and_signup/controllers/login_controller.dart';
-import 'package:flutter_application_1/login_and_signup/signup_page.dart';
+import 'package:flutter_application_1/screens/login_and_signup/controllers/login_controller.dart';
+import 'package:flutter_application_1/screens/login_and_signup/signup_page.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
