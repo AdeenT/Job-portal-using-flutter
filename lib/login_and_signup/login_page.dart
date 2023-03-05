@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login_and_signup/controllers/login_controller.dart';
 import 'package:flutter_application_1/login_and_signup/signup_page.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
-import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
@@ -109,7 +110,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(SelectionScreen());
+                      Get.to(NavBar());
                     },
                     child: const Text(
                       "Sign in",
@@ -173,7 +174,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(width: 3),
                   TextButton(
                     onPressed: () {
-                      Get.to( SignUpPage());
+                      Get.to(SignUpPage());
                     },
                     child: const Text(
                       "Sign up",

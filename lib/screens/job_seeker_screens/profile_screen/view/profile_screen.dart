@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/settings_screen/view/settings_screen.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/global.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final height = Get.size.height;
-    final width = Get.size.width;
+  
     return Scaffold(
       appBar: AppBar(
         title: Text(

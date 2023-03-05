@@ -1,19 +1,16 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/recruiter_create_profile_screen/controller/recrter_create_prof_controller.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/global.dart';
-import '../controller/controller.dart';
-
-class CreateProfile extends StatelessWidget {
-  CreateProfile({super.key});
-  final controller = Get.put(CreateProfileController());
+class RecruiterCreateProfile extends StatelessWidget {
+  RecruiterCreateProfile({super.key});
+  final controller = Get.put(RecruiterCreateProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Profile",
           style: TextStyle(
             fontSize: 20,
@@ -25,7 +22,7 @@ class CreateProfile extends StatelessWidget {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
-      body: GetBuilder<CreateProfileController>(
+      body: GetBuilder<RecruiterCreateProfileController>(
         builder: (controller) => Form(
           key: controller.formKey,
           child: SingleChildScrollView(
@@ -36,45 +33,47 @@ class CreateProfile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: height * 0.025,
                     ),
                     controller.subHeading("Let's create your profile"),
                     SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.025,
                     ),
-                    Container(
-                      height: 130,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black45),
-                          borderRadius: BorderRadius.circular(30)),
+                    const Divider(
+                      color: Colors.black,
                     ),
                     SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.025,
                     ),
-                    controller.subHeading("Name"),
-                    controller.textField("Full Name", controller.nameController,
-                        TextInputType.name),
+                    controller.subHeading("Name of the company"),
+                    controller.textField("Name of the company",
+                        controller.nameController, TextInputType.name),
                     SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.025,
                     ),
-                    controller.subHeading("Age"),
-                    controller.textField(
-                        "21", controller.ageController, TextInputType.number),
+                    controller.subHeading("Email"),
+                    controller.textField("Company's Email",
+                        controller.emailController, TextInputType.emailAddress),
                     SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.025,
+                    ),
+                    controller.subHeading("Established date"),
+                    controller.textField("Established date",
+                        controller.dateController, TextInputType.datetime),
+                    SizedBox(
+                      height: height * 0.025,
+                    ),
+                    controller.subHeading("Country"),
+                    controller.textField("Country",
+                        controller.countryController, TextInputType.text),
+                    SizedBox(
+                      height: height * 0.025,
                     ),
                     controller.subHeading("Address"),
-                    controller.textField("eg- Calicut, Kerala",
+                    controller.textField("Company address",
                         controller.addressController, TextInputType.text),
                     SizedBox(
-                      height: height * 0.02,
-                    ),
-                    controller.subHeading("Occupation"),
-                    controller.textField("Current job",
-                        controller.occupationController, TextInputType.text),
-                    SizedBox(
-                      height: height * 0.02,
+                      height: height * 0.045,
                     ),
                     SizedBox(
                       width: double.infinity,
