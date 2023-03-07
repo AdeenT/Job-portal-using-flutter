@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -15,12 +16,16 @@ class SignUpController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyUp = GlobalKey<FormState>();
   final googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
-  buildTextField(TextEditingController controller, String label,TextInputType keyboardType, bool obscure,
+  buildTextField(
+      TextEditingController controller,
+      String label,
+      TextInputType keyboardType,
+      bool obscure,
       String? Function(String?) validator) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -31,7 +36,7 @@ class SignUpController extends GetxController {
       ),
       child: TextFormField(
         obscureText: obscure,
-        keyboardType: keyboardType ,
+        keyboardType: keyboardType,
         validator: validator,
         controller: controller,
         decoration: InputDecoration(
@@ -65,8 +70,8 @@ class SignUpController extends GetxController {
     }
   }
 
-  onSignUPClicked() async {
-    if (formKey.currentState!.validate()) {
+  Future<void> onSignUpButtonClicked() async {
+    if (formKeyUp.currentState!.validate()) {
       //checking the user email is already exist in the collection
       var collectionRef =
           await FirebaseFirestore.instance.collection("Users").get();
@@ -81,9 +86,8 @@ class SignUpController extends GetxController {
         await signUpWithEmailAndPassword();
 
         //add user details to firebase users collection
-        String uid = FirebaseAuth.instance.currentUser!.uid;
-        log(uid);
-        await FirebaseFirestore.instance.collection('Users').doc(uid).set({
+        String id = FirebaseAuth.instance.currentUser!.uid;
+        await FirebaseFirestore.instance.collection('Users').doc(id).set({
           'Auth': {
             'email': emailController.text,
             'password': passwordController.text,
@@ -103,6 +107,7 @@ class SignUpController extends GetxController {
         );
       }
     }
+    Get.off(LoginPage());
   }
 
   Future googleLogin() async {
@@ -153,7 +158,7 @@ class SignUpController extends GetxController {
             ),
           ),
           onPressed: () {
-            if (formKey.currentState!.validate()) {
+            if (formKeyUp.currentState!.validate()) {
             } else {
               Get.snackbar(
                 'Error',

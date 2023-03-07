@@ -5,7 +5,7 @@ import 'package:flutter_application_1/screens/job_seeker_screens/navbar/controll
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class NavBar extends GetView<NavBarController> {
+class NavBar extends StatelessWidget {
   NavBar({super.key});
 
   final navbarController = Get.put(NavBarController());
@@ -49,7 +49,7 @@ class NavBar extends GetView<NavBarController> {
             ),
           ),
         ),
-        body: navbarController.screens[navbarController.index.value],
+        body: navbarController.getPage(navbarController.index.value),
       ),
     );
   }

@@ -15,8 +15,7 @@ class CreateProfileController extends GetxController {
   final TextEditingController ageController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController occupationController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
+  GlobalKey<FormState> formKeySee = GlobalKey<FormState>();
 
   textField(
     String label,
@@ -62,7 +61,7 @@ class CreateProfileController extends GetxController {
     seekerAddress: addressController.text,
     seekerOccupation: occupationController.text,
   );
-    if (formKey.currentState!.validate()){
+    if (formKeySee.currentState!.validate()){
       await createSeeker(seeker);
       Get.off(NavBar());
     }else {

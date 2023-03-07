@@ -1,10 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/create_vacancy/view/create_vacany.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RecruiterHomeScreenController extends GetxController {
   final height = Get.size.height;
   final width = Get.size.width;
+  final googleSignIn = GoogleSignIn();
+
+  Future logout() async {
+    await googleSignIn.signOut();
+    FirebaseAuth.instance.signOut();
+  }
 
   jobCard(
     String logo,

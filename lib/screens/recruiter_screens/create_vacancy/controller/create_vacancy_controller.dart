@@ -8,7 +8,7 @@ class VacancyController extends GetxController {
   final TextEditingController salaryController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController typeController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyVacancy = GlobalKey<FormState>();
 
   textField(
     String label,

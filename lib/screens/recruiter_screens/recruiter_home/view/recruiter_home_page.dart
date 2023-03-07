@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/controller/recr_home_controller.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +59,10 @@ class RecruiterHomePage extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await controller.logout();
+                          Get.offAll(LoginPage());
+                        },
                         icon: Icon(
                           Icons.filter_list,
                           color: Colors.blue.withOpacity(0.4),

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 
 import '../../../../core/global.dart';
 import '../../../../models/recruiter/recruiter_model.dart';
-import '../../../job_seeker_screens/navbar/view/navbar.dart';
 
 class RecruiterCreateProfileController extends GetxController {
   final TextEditingController nameController = TextEditingController();
@@ -14,7 +13,7 @@ class RecruiterCreateProfileController extends GetxController {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKeyRec = GlobalKey<FormState>();
 
   textField(
     String label,
@@ -62,7 +61,7 @@ class RecruiterCreateProfileController extends GetxController {
       recruiterDate: dateController.text,
     );
     createSeeker(recruiter);
-    if (formKey.currentState!.validate()) {
+    if (formKeyRec.currentState!.validate()) {
       Get.off(RecruiterHomePage());
     } else {
       Get.snackbar(

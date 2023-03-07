@@ -16,7 +16,7 @@ class SignUpPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Form(
-            key: controller.formKey,
+            key: controller.formKeyUp,
             child: Column(
               children: [
                 SizedBox(
@@ -80,21 +80,12 @@ class SignUpPage extends StatelessWidget {
                         elevation: 0,
                         backgroundColor: Colors.blue.shade400,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius : BorderRadius.circular(30),
                         ),
                       ),
-                      onPressed: () {
-                        if (controller.formKey.currentState!.validate()) {
-                          controller.onSignUPClicked();
-                        } else {
-                          Get.snackbar(
-                            'Error',
-                            'Please complete the form correctly',
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                          );
-                        }
+                      onPressed: () async{
+                        controller.formKeyUp.currentState!.validate();
+                        await controller.onSignUpButtonClicked();
                       },
                       child: const Text(
                         "Sign up",

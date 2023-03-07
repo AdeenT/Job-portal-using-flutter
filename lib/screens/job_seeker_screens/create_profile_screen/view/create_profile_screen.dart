@@ -27,7 +27,7 @@ class CreateProfile extends StatelessWidget {
       ),
       body: GetBuilder<CreateProfileController>(
         builder: (controller) => Form(
-          key: controller.formKey,
+          key: controller.formKeySee,
           child: SingleChildScrollView(
             child: Center(
               child: Padding(

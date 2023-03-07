@@ -24,7 +24,7 @@ class RecruiterCreateProfile extends StatelessWidget {
       ),
       body: GetBuilder<RecruiterCreateProfileController>(
         builder: (controller) => Form(
-          key: controller.formKey,
+          key: controller.formKeyRec,
           child: SingleChildScrollView(
             child: Center(
               child: Padding(

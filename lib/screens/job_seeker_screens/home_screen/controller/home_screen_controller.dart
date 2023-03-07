@@ -1,9 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeScreenController extends GetxController {
-  final height = Get.size.height;
-  final width = Get.size.width;
+  final googleSignIn = GoogleSignIn();
 
   jobCard(
     String logo,
@@ -104,6 +107,11 @@ class HomeScreenController extends GetxController {
         ),
       ),
     );
+  }
+
+  Future logout() async {
+     googleSignIn.signOut();
+    FirebaseAuth.instance.signOut();
   }
 
   userName(String name) {

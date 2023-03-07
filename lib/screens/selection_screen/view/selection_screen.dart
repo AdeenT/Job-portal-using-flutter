@@ -83,9 +83,11 @@ class SelectionScreen extends StatelessWidget {
                     
                     if (roleController.selected == 1) {
                       FirebaseFirestore.instance.collection("seeker").doc(userUID).set({"role":"seeker"});
+                      FirebaseFirestore.instance.collection("Users").doc(userUID).update({"role":"seeker"});
                       Get.to(CreateProfile());
                     } else if (roleController.selected == 2) {
                        FirebaseFirestore.instance.collection("recruiter").doc(userUID).set({"role":"recruiter"});
+                      FirebaseFirestore.instance.collection("Users").doc(userUID).update({"role":"recruiter"});
                       
                       Get.to(RecruiterCreateProfile());
                     } else {
