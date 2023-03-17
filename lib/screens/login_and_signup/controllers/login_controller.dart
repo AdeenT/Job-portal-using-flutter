@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/main_page/main_page.dart';
 import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,8 +13,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> formKeyIn = GlobalKey<FormState>();
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  RxBool updateWidget = false.obs;
   bool obscureText = true;
   Icon visibilityIcon = const Icon(
     Icons.visibility_off,
@@ -40,7 +41,7 @@ class LoginController extends GetxController {
       print(e.toString());
     }
     update();
-    Get.off(SelectionScreen());
+    Get.off(const MainPage());
   }
 
   onGoogleSignInClicked() async {
@@ -79,45 +80,59 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> onSignInButtonClicked() async {
-    if (formKeyIn.currentState!.validate()) {
-      log("sign in Validation succesful");
-      var collectionRefrnce =
-          await FirebaseFirestore.instance.collection("Users").get();
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+      update();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        log('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        log('Wrong password provided for that user.');
+      }
+    }
+  }
 
-      //---------------checking user email is exist or not------------
-      var matchingUsers = collectionRefrnce.docs
-          .where((element) =>
-              element.data()['Auth']['email'] == emailController.text)
-          .toList();
-      if (matchingUsers.isNotEmpty) {
-        log('user exists');
-        if (matchingUsers.first.data()['Auth']['password'] ==
-            passwordController.text) {
-          log('sign in success');
-          emailController.clear();
-          passwordController.clear();
-        } else {
-          Get.snackbar(
-            'Error',
-            'password does not match',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        }
+  Future<void> onSignInButtonClicked() async {
+    var collectionRefrnce =
+        await FirebaseFirestore.instance.collection("Users").get();
+
+    //---------------checking user email is exist or not------------
+    var matchingUsers = collectionRefrnce.docs
+        .where((element) =>
+            element.data()['Auth']['email'] == emailController.text)
+        .toList();
+    if (matchingUsers.isNotEmpty) {
+      log('user exists');
+      if (matchingUsers.first.data()['Auth']['password'] ==
+          passwordController.text) {
+        log(passwordController.text);
+        log('sign in success');
+
+        await signIn();
       } else {
-        log("usernotfound");
         Get.snackbar(
           'Error',
-          'User not exist. please sign in ',
+          'password does not match',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
       }
-      log("sign in button execution complete");
+    } else {
+      log("usernotfound");
+      Get.snackbar(
+        'Error',
+        'User not exist. please sign in ',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
+    log("sign in button execution complete");
   }
 
   buildTextField(

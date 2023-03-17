@@ -1,28 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/global.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
-import 'package:flutter_application_1/screens/recruiter_screens/create_vacancy/view/create_vacany.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/widgets/get_job_details.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class RecruiterHomeScreenController extends GetxController {
-  final height = Get.size.height;
-  final width = Get.size.width;
-  final googleSignIn = GoogleSignIn();
-  String userUID = FirebaseAuth.instance.currentUser!.uid;
-  List<QueryDocumentSnapshot<Map<String, dynamic>>>? jobList;
-  int? length;
+class ShowJobListWidget extends StatelessWidget {
+  const ShowJobListWidget({
+    super.key,
+    required this.length,
+    required this.jobList,
+  });
 
-  Future logout() async {
-    await googleSignIn.signOut();
-    FirebaseAuth.instance.signOut();
-  }
+  final List<QueryDocumentSnapshot<Map<String, dynamic>>> jobList;
+  final int length;
 
-  jobCard (
-    List<QueryDocumentSnapshot<Map<String, dynamic>>> jobList,
-    int length,
-  ) {
+  @override
+  Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: length,
       shrinkWrap: true,
@@ -32,9 +26,12 @@ class RecruiterHomeScreenController extends GetxController {
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.only(top: 6),
       itemBuilder: (context, index) {
-         final vacancyModel = VacancyModel.fromJson(jobList[index].data());
+        final vacancyModel = VacancyModel.fromJson(jobList[index].data());
         return GestureDetector(
           onTap: () {
+            Get.to(RecruiterJobDetailsScreen(
+                vacancyModel: vacancyModel,
+                currentJobId: jobList[index].id));
           },
           child: Padding(
             padding: EdgeInsets.only(
@@ -135,55 +132,4 @@ class RecruiterHomeScreenController extends GetxController {
       },
     );
   }
-
-  companyName(String name) {
-    return Text(
-      "Welcome, $name!",
-      style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: Colors.black,
-      ),
-    );
-  }
-
-  Widget jobCategory(String category) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: Colors.blue.shade400,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-      child: Text(
-        category,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-
-  createVacancyButton() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 1,
-        backgroundColor: Colors.blue.shade400,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-      onPressed: () {
-        Get.to(CreateVacancyScreen());
-      },
-      child: const Text(
-        "Create Vacancy",
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Future getJobVacancies() async {}
 }

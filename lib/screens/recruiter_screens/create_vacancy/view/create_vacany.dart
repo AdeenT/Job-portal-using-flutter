@@ -10,8 +10,6 @@ class CreateVacancyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: controller.button(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
         title: const Text(
           "Create vacancy",
@@ -40,44 +38,45 @@ class CreateVacancyScreen extends StatelessWidget {
                 SizedBox(
                   height: height * 0.03,
                 ),
-                Container(
-                  color: Colors.orange,
-                  height: 100,
-                  width: 100,
-                  child: const Center(
-                    child: Text("logo"),
-                  ),
-                ),
                 SizedBox(
                   height: height * 0.03,
                 ),
-                const Divider(
-                  color: Colors.black54,
-                ),
+                controller.textField("Position", controller.positionController,
+                    TextInputType.text, "Job role"),
                 SizedBox(
                   height: height * 0.03,
                 ),
-                controller.subHeading("Open Position"),
-                controller.textField("Name of the Position",
-                    controller.positionController, TextInputType.text),
+                controller.textField("Salary", controller.salaryController,
+                    TextInputType.number, "Annual salary LPA eg: 5 "),
                 SizedBox(
                   height: height * 0.03,
                 ),
-                controller.subHeading("Salary"),
-                controller.textField("Salary per month",
-                    controller.salaryController, TextInputType.number),
-                SizedBox(
-                  height: height * 0.03,
-                ),
-                controller.subHeading("Location"),
                 controller.textField("Location ", controller.locationController,
-                    TextInputType.text),
+                    TextInputType.text, "Location"),
                 SizedBox(
                   height: height * 0.03,
                 ),
-                controller.subHeading("Type"),
+                controller.textField("Type ", controller.typeController,
+                    TextInputType.text, "Full time, part time etc..."),
+                SizedBox(
+                  height: height * 0.03,
+                ),
                 controller.textField(
-                    "Type ", controller.typeController, TextInputType.text),
+                    "Company Name",
+                    controller.companyController,
+                    TextInputType.text,
+                    "Company Name"),
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                controller.jobDescriptionBox(),
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                controller.button(),
+                SizedBox(
+                  height: height * 0.03,
+                ),
               ],
             ),
           ),

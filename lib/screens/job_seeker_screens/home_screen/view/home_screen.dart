@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/global.dart';
@@ -56,9 +59,9 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                          onPressed: () async{
-                           await controller.logout();
-                           Get.offAll(LoginPage());
+                          onPressed: () async {
+                            await controller.logout();
+                            Get.offAll(LoginPage());
                           },
                           icon: Icon(
                             Icons.filter_list,
@@ -87,25 +90,40 @@ class HomeScreen extends StatelessWidget {
                       controller.jobCategory("Developer"),
                     ],
                   ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(top: 6),
-                    itemBuilder: (context, index) {
-                      return controller.jobCard(
-                        "logo",
-                        "Designer",
-                        "Google LLC",
-                        "Hyderabad",
-                        "Remote",
-                        "5-7",
-                      );
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('recruiter')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      var recruitersList = snapshot.data!.docs;
+                      if (recruitersList.isEmpty) {
+                        log(recruitersList.length.toString());
+                        return const Text("Error");
+                      } else if (recruitersList.isNotEmpty) {
+                        return ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.only(top: 6),
+                            shrinkWrap: true,
+                            itemCount: recruitersList.length,
+                            itemBuilder: (context, index) {
+                              String recruiterUID = recruitersList[index].id;
+                              var vacanciesCollectionRef = FirebaseFirestore
+                                  .instance
+                                  .collection('recruiter')
+                                  .doc(recruiterUID)
+                                  .collection('vacancies');
+                              return controller.jobCard(
+                                vacanciesCollectionRef,
+                              );
+                            });
+                      } else {
+                        return const SizedBox();
+                      }
                     },
-                    itemCount: 5,
-                    separatorBuilder: (context, index) => const Divider(
-                      color: Colors.transparent,
-                    ),
-                  )
+                  ),
                 ],
               ),
             ),

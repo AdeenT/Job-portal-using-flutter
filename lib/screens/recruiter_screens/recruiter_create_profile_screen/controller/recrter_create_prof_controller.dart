@@ -13,7 +13,6 @@ class RecruiterCreateProfileController extends GetxController {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
-  GlobalKey<FormState> formKeyRec = GlobalKey<FormState>();
 
   textField(
     String label,
@@ -61,22 +60,17 @@ class RecruiterCreateProfileController extends GetxController {
       recruiterDate: dateController.text,
     );
     createSeeker(recruiter);
-    if (formKeyRec.currentState!.validate()) {
-      Get.off(RecruiterHomePage());
-    } else {
-      Get.snackbar(
-        'Error',
-        'Please complete this form',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+
+    Get.off(RecruiterHomePage());
   }
 
   Future createSeeker(RecruiterModel seeker) async {
     String userUID = FirebaseAuth.instance.currentUser!.uid;
     final docSeeker = FirebaseFirestore.instance.collection("recruiter");
-    docSeeker.doc(userUID).set(seeker.toMap());
+    docSeeker.doc(userUID).set(({
+          "user details": {seeker.toMap()}
+        }));
   }
+
+  
 }

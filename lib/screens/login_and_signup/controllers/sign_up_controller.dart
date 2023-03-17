@@ -1,12 +1,8 @@
-// ignore_for_file: avoid_print
-
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/global.dart';
-import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -16,7 +12,6 @@ class SignUpController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
-  GlobalKey<FormState> formKeyUp = GlobalKey<FormState>();
   final googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
@@ -71,43 +66,40 @@ class SignUpController extends GetxController {
   }
 
   Future<void> onSignUpButtonClicked() async {
-    if (formKeyUp.currentState!.validate()) {
-      //checking the user email is already exist in the collection
-      var collectionRef =
-          await FirebaseFirestore.instance.collection("Users").get();
-      if (collectionRef.docs
-          .where(
-            (element) =>
-                element.data()['Auth']['email'].toString() ==
-                emailController.text,
-          )
-          .isEmpty) {
-        //sign up
-        await signUpWithEmailAndPassword();
+    var collectionRef =
+        await FirebaseFirestore.instance.collection("Users").get();
+    if (collectionRef.docs
+        .where(
+          (element) =>
+              element.data()['Auth']['email'].toString() ==
+              emailController.text,
+        )
+        .isEmpty) {
+      await signUpWithEmailAndPassword();
 
-        //add user details to firebase users collection
-        String id = FirebaseAuth.instance.currentUser!.uid;
-        await FirebaseFirestore.instance.collection('Users').doc(id).set({
-          'Auth': {
-            'email': emailController.text,
-            'password': passwordController.text,
-          },
-        });
+      String id = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('Users').doc(id).set({
+        'Auth': {
+          'email': emailController.text,
+          'password': passwordController.text,
+        },
+      });
 
-        emailController.clear();
-        passwordController.clear();
-        confirmController.clear();
-      } else {
-        Get.snackbar(
-          'Email',
-          'This user is already exist',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      }
+      emailController.clear();
+      passwordController.clear();
+      confirmController.clear();
+      onClose();
+    } else {
+      Get.snackbar(
+        'Email',
+        'This user is already exist',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
-    Get.off(LoginPage());
+
+    Get.off(SelectionScreen());
   }
 
   Future googleLogin() async {
@@ -124,7 +116,7 @@ class SignUpController extends GetxController {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     update();
     Get.off(SelectionScreen());
@@ -157,18 +149,7 @@ class SignUpController extends GetxController {
               borderRadius: BorderRadius.circular(30),
             ),
           ),
-          onPressed: () {
-            if (formKeyUp.currentState!.validate()) {
-            } else {
-              Get.snackbar(
-                'Error',
-                'Please complete this form',
-                snackPosition: SnackPosition.BOTTOM,
-                backgroundColor: Colors.red,
-                colorText: Colors.white,
-              );
-            }
-          },
+          onPressed: () {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

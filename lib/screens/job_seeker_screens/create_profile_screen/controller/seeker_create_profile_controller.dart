@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,7 +13,6 @@ class CreateProfileController extends GetxController {
   final TextEditingController ageController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController occupationController = TextEditingController();
-  GlobalKey<FormState> formKeySee = GlobalKey<FormState>();
 
   textField(
     String label,
@@ -54,40 +51,27 @@ class CreateProfileController extends GetxController {
     );
   }
 
-  void onConfirmClicked()async{
-      final seeker = SeekerModel(
-    seekerName: nameController.text,
-    seekerAge: ageController.text,
-    seekerAddress: addressController.text,
-    seekerOccupation: occupationController.text,
-  );
-    if (formKeySee.currentState!.validate()){
-      await createSeeker(seeker);
-      Get.off(NavBar());
-    }else {
-          Get.snackbar(
-            'Error',
-            'Please complete this form',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        }
+  void onConfirmClicked() async {
+    final seeker = SeekerModel(
+      seekerName: nameController.text,
+      seekerAge: ageController.text,
+      seekerAddress: addressController.text,
+      seekerOccupation: occupationController.text,
+    );
+
+    await createSeeker(seeker);
+    onClose();
+    Get.off(NavBar());
   }
 
-  Future createSeeker(SeekerModel seeker) async{
+  Future createSeeker(SeekerModel seeker) async {
     try {
-       String userUID = FirebaseAuth.instance.currentUser!.uid;
-    final docSeeker = FirebaseFirestore.instance.collection("seeker");
-    docSeeker.doc(userUID).update(seeker.toMap());
-    log(seeker.toMap().toString());
-      
-    }on FirebaseException catch (e) {
+      String userUID = FirebaseAuth.instance.currentUser!.uid;
+      final docSeeker = FirebaseFirestore.instance.collection("seeker");
+      docSeeker.doc(userUID).update(seeker.toMap());
+      log(seeker.toMap().toString());
+    } on FirebaseException catch (e) {
       log(e.code);
-      
     }
-   
   }
-
-
 }

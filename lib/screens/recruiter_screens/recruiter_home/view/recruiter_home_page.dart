@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/controller/recr_home_controller.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/widgets/get_job_lists_widget.dart';
 import 'package:get/get.dart';
 
 class RecruiterHomePage extends StatelessWidget {
@@ -73,25 +75,28 @@ class RecruiterHomePage extends StatelessWidget {
                 SizedBox(
                   height: height * 0.06,
                 ),
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(top: 6),
-                  itemBuilder: (context, index) {
-                    return controller.jobCard(
-                      "logo",
-                      "Designer",
-                      "TCS",
-                      "Hyderabad",
-                      "Remote",
-                      "5-7",
-                    );
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('recruiter')
+                      .doc(controller.userUID)
+                      .collection('vacancies')
+                      .orderBy('createdTime', descending: true)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    var jobList = snapshot.data!.docs;
+                    if (jobList.isEmpty) {
+                      return const Center(
+                          child: Text("You haven't posted any vacancies"));
+                    } else if (jobList.isNotEmpty) {
+                      return ShowJobListWidget(length: jobList.length, jobList: jobList);
+                    }else{
+                      return const SizedBox();
+                    }
                   },
-                  itemCount: 2,
-                  separatorBuilder: (context, index) => const Divider(
-                    color: Colors.transparent,
-                  ),
-                ),
+                )
               ],
             ),
           ),
@@ -100,3 +105,5 @@ class RecruiterHomePage extends StatelessWidget {
     );
   }
 }
+
+

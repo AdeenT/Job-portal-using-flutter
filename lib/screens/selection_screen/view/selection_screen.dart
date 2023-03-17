@@ -125,6 +125,7 @@ class JobRoleButtonWidget extends StatelessWidget {
 
   final IconData icon;
   final String text;
+  // ignore: prefer_typing_uninitialized_variables
   final elevation;
   final bool visibility;
 
