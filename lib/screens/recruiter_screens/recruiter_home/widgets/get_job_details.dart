@@ -1,11 +1,12 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
+import 'package:flutter_application_1/core/utils/logger.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/controller/get_job_details_controller.dart';
+import 'package:flutter_application_1/widgets/text/text.dart';
 import 'package:get/get.dart';
 
 class RecruiterJobDetailsScreen extends StatelessWidget {
@@ -40,7 +41,7 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
             Get.back();
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          color: Colors.blue.shade400,
+          color: AppColor.primary,
         ),
       ),
       body: SingleChildScrollView(
@@ -62,7 +63,7 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
             ),
             controller.jobDescription(vacancyModel),
             SizedBox(
-              height: height * 0.02,
+              height: AppSize.height * 0.02,
             ),
             const Padding(
               padding: EdgeInsets.all(18.0),
@@ -79,7 +80,7 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: AppSize.height * 0.02,
             ),
             FutureBuilder(
                 future: FirebaseFirestore.instance
@@ -93,8 +94,16 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
                     return const CircularProgressIndicator();
                   }
                   List<dynamic> appliedUsersList =
-                      snapshot.data!.get('applied');
+                      snapshot.data!.data()?['applied'] ?? [];
 
+                  if (appliedUsersList.isEmpty) {
+                    return const JText(
+                      text: 'No applied users available!',
+                      fontSize: 16,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    );
+                  }
                   return ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -106,7 +115,7 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
                             .get(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
-                            const CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
                           return controller.appliedUsers(
                               snapshot.data!.get('seekerName').toString(),
@@ -123,7 +132,7 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
                   );
                 }),
             SizedBox(
-              height: height * 0.02,
+              height: AppSize.height * 0.02,
             ),
           ],
         ),

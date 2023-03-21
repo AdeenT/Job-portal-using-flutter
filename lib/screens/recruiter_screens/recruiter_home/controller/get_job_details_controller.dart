@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:get/get.dart';
 
@@ -9,9 +10,9 @@ class GetJobDetailController extends GetxController {
   jobCard(VacancyModel vacancyModel) {
     return Padding(
       padding: EdgeInsets.only(
-        top: height * 0.05,
-        left: width * 0.05,
-        right: width * 0.05,
+        top: AppSize.height * 0.05,
+        left: AppSize.width * 0.05,
+        right: AppSize.width * 0.05,
       ),
       child: Material(
         elevation: 1,
@@ -33,7 +34,7 @@ class GetJobDetailController extends GetxController {
                     ),
                   ),
                   SizedBox(
-                    width: width * 0.05,
+                    width: AppSize.width * 0.05,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -47,7 +48,7 @@ class GetJobDetailController extends GetxController {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.01,
+                        height: AppSize.height * 0.01,
                       ),
                       Text(
                         vacancyModel.companyName,
@@ -57,7 +58,7 @@ class GetJobDetailController extends GetxController {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.01,
+                        height: AppSize.height * 0.01,
                       ),
                     ],
                   )
@@ -73,7 +74,7 @@ class GetJobDetailController extends GetxController {
   jobDetails(VacancyModel vacancyModel) {
     return Padding(
       padding: EdgeInsets.only(
-        left: width * 0.1,
+        left: AppSize.width * 0.1,
       ),
       child: Row(
         children: [
@@ -81,7 +82,7 @@ class GetJobDetailController extends GetxController {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: width * 0.1,
+                width: AppSize.width * 0.1,
               ),
               Text(
                 "salary",
@@ -91,7 +92,7 @@ class GetJobDetailController extends GetxController {
                     color: Colors.grey.shade500),
               ),
               SizedBox(
-                height: height * 0.03,
+                height: AppSize.height * 0.03,
               ),
               Text(
                 "type",
@@ -101,7 +102,7 @@ class GetJobDetailController extends GetxController {
                     color: Colors.grey.shade500),
               ),
               SizedBox(
-                height: height * 0.03,
+                height: AppSize.height * 0.03,
               ),
               Text(
                 "location",
@@ -113,13 +114,13 @@ class GetJobDetailController extends GetxController {
             ],
           ),
           SizedBox(
-            width: width * 0.38,
+            width: AppSize.width * 0.38,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${vacancyModel.salary} lpa",
+                "${vacancyModel.salary} LPA",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -127,7 +128,7 @@ class GetJobDetailController extends GetxController {
                 ),
               ),
               SizedBox(
-                height: height * 0.03,
+                height: AppSize.height * 0.03,
               ),
               Text(
                 vacancyModel.type,
@@ -138,7 +139,7 @@ class GetJobDetailController extends GetxController {
                 ),
               ),
               SizedBox(
-                height: height * 0.03,
+                height: AppSize.height * 0.03,
               ),
               Text(
                 vacancyModel.location,
@@ -158,9 +159,9 @@ class GetJobDetailController extends GetxController {
   jobDescription(VacancyModel vacancyModel) {
     return Padding(
       padding: EdgeInsets.only(
-        top: height * 0.03,
-        right: width * 0.05,
-        left: width * 0.05,
+        top: AppSize.height * 0.03,
+        right: AppSize.width * 0.05,
+        left: AppSize.width * 0.05,
       ),
       child: Column(
         children: [
@@ -172,7 +173,7 @@ class GetJobDetailController extends GetxController {
             ),
           ),
           SizedBox(
-            height: height * 0.03,
+            height: AppSize.height * 0.03,
           ),
           Text(
             vacancyModel.description,
@@ -189,8 +190,8 @@ class GetJobDetailController extends GetxController {
   ) {
     return Padding(
       padding: EdgeInsets.only(
-        left: width * 0.05,
-        right: width * 0.05,
+        left: AppSize.width * 0.05,
+        right: AppSize.width * 0.05,
       ),
       child: Material(
         elevation: 1,
@@ -205,7 +206,7 @@ class GetJobDetailController extends GetxController {
                 children: [
                   const CircleAvatar(maxRadius: 40),
                   SizedBox(
-                    width: width * 0.05,
+                    width: AppSize.width * 0.05,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -219,7 +220,7 @@ class GetJobDetailController extends GetxController {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.01,
+                        height: AppSize.height * 0.01,
                       ),
                       Text(
                         occupation,
@@ -229,7 +230,7 @@ class GetJobDetailController extends GetxController {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.01,
+                        height: AppSize.height * 0.01,
                       ),
                     ],
                   ),
@@ -245,7 +246,7 @@ class GetJobDetailController extends GetxController {
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       elevation: 1,
-                      backgroundColor: Colors.blue.shade400,
+                      backgroundColor: AppColor.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -263,7 +264,9 @@ class GetJobDetailController extends GetxController {
                     ),
                     child: Text(
                       "See Details",
-                      style: TextStyle(color: Colors.blue.shade400),
+                      style: TextStyle(
+                        color: AppColor.primary,
+                      ),
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:get/get.dart';
 
 class ApplieedJobsController extends GetxController {
@@ -9,7 +10,7 @@ class ApplieedJobsController extends GetxController {
       onPressed: () {},
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: Colors.blue.shade400,
+        backgroundColor: AppColor.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -76,7 +77,7 @@ class ApplieedJobsController extends GetxController {
                     Column(
                       children: [
                         Text(
-                          "3-6 lpa",
+                          "3-6 L",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

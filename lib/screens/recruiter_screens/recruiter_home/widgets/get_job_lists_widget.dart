@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/widgets/get_job_details.dart';
 import 'package:get/get.dart';
@@ -30,13 +30,12 @@ class ShowJobListWidget extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             Get.to(RecruiterJobDetailsScreen(
-                vacancyModel: vacancyModel,
-                currentJobId: jobList[index].id));
+                vacancyModel: vacancyModel, currentJobId: jobList[index].id));
           },
           child: Padding(
             padding: EdgeInsets.only(
-              left: width * 0.05,
-              right: width * 0.05,
+              left: AppSize.width * 0.05,
+              right: AppSize.width * 0.05,
             ),
             child: Material(
               elevation: 1,
@@ -69,7 +68,7 @@ class ShowJobListWidget extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: AppSize.height * 0.01,
                             ),
                             Text(
                               vacancyModel.companyName.capitalizeFirst
@@ -80,7 +79,7 @@ class ShowJobListWidget extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: height * 0.01,
+                              height: AppSize.height * 0.01,
                             ),
                             Text(
                               "${vacancyModel.location.capitalizeFirst} - ${vacancyModel.type.capitalizeFirst}",
@@ -112,7 +111,7 @@ class ShowJobListWidget extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              "${vacancyModel.salary} lpa",
+                              "${vacancyModel.salary} LPA",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,

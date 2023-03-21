@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:get/state_manager.dart';
 
 class RecruiterDescriptionController extends GetxController {
@@ -14,7 +15,7 @@ class RecruiterDescriptionController extends GetxController {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 1,
-            backgroundColor: Colors.blue.shade400,
+            backgroundColor: AppColor.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),

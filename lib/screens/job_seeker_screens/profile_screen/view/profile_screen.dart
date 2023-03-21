@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/settings_screen/view/settings_screen.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/global.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -24,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         elevation: 0,
         backgroundColor: Colors.white,
-      automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -44,13 +43,13 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                left: width * 0.1,
-                top: height * 0.05,
+                left: AppSize.width * 0.1,
+                top: AppSize.height * 0.05,
               ),
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: height * 0.06,
+                    radius: AppSize.height * 0.06,
                     backgroundColor: Colors.blue.withOpacity(0.6),
                     child: Icon(
                       Icons.person,
@@ -58,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: width * 0.05),
+                    padding: EdgeInsets.only(left: AppSize.width * 0.05),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -68,14 +67,14 @@ class ProfileScreen extends StatelessWidget {
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
-                          height: height * 0.005,
+                          height: AppSize.height * 0.005,
                         ),
                         Text(
                           "example@example.com",
                           style: TextStyle(fontSize: 13, color: Colors.grey),
                         ),
                         SizedBox(
-                          height: height * 0.005,
+                          height: AppSize.height * 0.005,
                         ),
                         Text(
                           "Flutter Developer",
@@ -91,10 +90,10 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: height * 0.05,
+              height: AppSize.height * 0.05,
             ),
             Padding(
-              padding: EdgeInsets.only(left: width * 0.11),
+              padding: EdgeInsets.only(left: AppSize.width * 0.11),
               child: Text(
                 "Full Name",
                 style: TextStyle(
@@ -116,7 +115,7 @@ class ProfileScreen extends StatelessWidget {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.only(left: width * 0.11),
+              padding: EdgeInsets.only(left: AppSize.width * 0.11),
               child: Text(
                 "Email",
                 style: TextStyle(
@@ -138,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.only(left: width * 0.11),
+              padding: EdgeInsets.only(left: AppSize.width * 0.11),
               child: Text(
                 "DOB",
                 style: TextStyle(
@@ -160,7 +159,7 @@ class ProfileScreen extends StatelessWidget {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.only(left: width * 0.11),
+              padding: EdgeInsets.only(left: AppSize.width * 0.11),
               child: Text(
                 "Address",
                 style: TextStyle(
@@ -182,7 +181,7 @@ class ProfileScreen extends StatelessWidget {
               height: 10,
             ),
             Padding(
-              padding: EdgeInsets.only(left: width * 0.11),
+              padding: EdgeInsets.only(left: AppSize.width * 0.11),
               child: Text(
                 "Occupation",
                 style: TextStyle(

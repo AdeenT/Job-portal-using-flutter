@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'controllers/sign_up_controller.dart';
@@ -19,7 +20,7 @@ class SignUpPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: height * 0.26,
+                height: AppSize.height * 0.26,
               ),
               const Text(
                 "Sign up for free",
@@ -64,7 +65,7 @@ class SignUpPage extends StatelessWidget {
                 },
               ),
               SizedBox(
-                height: height * 0.025,
+                height: AppSize.height * 0.025,
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -77,7 +78,7 @@ class SignUpPage extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Colors.blue.shade400,
+                      backgroundColor: AppColor.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -94,7 +95,7 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: height * 0.027,
+                height: AppSize.height * 0.027,
               ),
               const Text(
                 "or continue with",
@@ -121,7 +122,7 @@ class SignUpPage extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(width: width * 0.02),
+                  SizedBox(width: AppSize.width * 0.02),
                   TextButton(
                     onPressed: () {
                       Get.to(LoginPage());

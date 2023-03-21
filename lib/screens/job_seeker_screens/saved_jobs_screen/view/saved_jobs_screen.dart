@@ -116,7 +116,7 @@ class SavedJobs extends StatelessWidget {
                                   ],
                                 ),
                                 Text(
-                                  "3-6 lpa",
+                                  "3-6 LPA",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,

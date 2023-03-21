@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -27,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
             Get.back();
           },
           icon: Icon(Icons.arrow_back_ios_new_rounded),
-          color: Colors.blue.shade400,
+          color: AppColor.primary,
         ),
       ),
       body: Padding(
@@ -44,7 +45,6 @@ class SettingsScreen extends StatelessWidget {
                 tileColor: Colors.blue.withOpacity(0.05),
                 iconColor: Colors.blue.withOpacity(0.6),
                 onTap: () {}),
-           
             ListTile(
               leading: const Icon(Icons.lock),
               title: const Text('Security'),

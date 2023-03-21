@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/create_profile_screen/view/create_profile_screen.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_create_profile_screen/view/recr_create_prof.dart';
 import 'package:flutter_application_1/screens/selection_screen/controller/selection_screen_controller.dart';
@@ -21,7 +21,7 @@ class SelectionScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: height * 0.04,
+            height: AppSize.height * 0.04,
           ),
           Icon(
             Icons.person_pin_rounded,
@@ -29,14 +29,14 @@ class SelectionScreen extends StatelessWidget {
             size: 28,
           ),
           SizedBox(
-            height: height * 0.01,
+            height: AppSize.height * 0.01,
           ),
           const Text(
             'What are you looking for?',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
           ),
           SizedBox(
-            height: height * 0.04,
+            height: AppSize.height * 0.04,
           ),
           GetBuilder<SelectionScreenController>(
             builder: (controller) => Row(
@@ -68,10 +68,10 @@ class SelectionScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: height * 0.03,
+            height: AppSize.height * 0.03,
           ),
           Padding(
-            padding: EdgeInsets.only(right: width * 0.05),
+            padding: EdgeInsets.only(right: AppSize.width * 0.05),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -134,14 +134,14 @@ class JobRoleButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width * 0.41,
-      height: height * 0.15,
+      width: AppSize.width * 0.41,
+      height: AppSize.height * 0.15,
       child: Material(
         elevation: elevation,
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
         child: Padding(
-          padding: EdgeInsets.all(width * 0.04),
+          padding: EdgeInsets.all(AppSize.width * 0.04),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

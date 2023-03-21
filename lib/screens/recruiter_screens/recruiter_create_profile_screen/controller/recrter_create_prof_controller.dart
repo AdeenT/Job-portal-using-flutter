@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/global.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import '../../../../models/recruiter/recruiter_model.dart';
 
 class RecruiterCreateProfileController extends GetxController {
@@ -42,7 +42,7 @@ class RecruiterCreateProfileController extends GetxController {
 
   subHeading(String subheading) {
     return Padding(
-      padding: EdgeInsets.only(left: width * 0.05),
+      padding: EdgeInsets.only(left: AppSize.width * 0.05),
       child: Text(
         subheading,
         style:
@@ -71,6 +71,4 @@ class RecruiterCreateProfileController extends GetxController {
           "user details": {seeker.toMap()}
         }));
   }
-
-  
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:get/get.dart';
 
 class AppliedScreen extends StatelessWidget {
@@ -31,9 +32,7 @@ class AppliedScreen extends StatelessWidget {
               size: 30,
               color: Colors.blue.withOpacity(0.65),
             ),
-            onPressed: () {
-              
-            },
+            onPressed: () {},
           )
         ],
       ),
@@ -78,7 +77,7 @@ class AppliedScreen extends StatelessWidget {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Colors.blue.shade400,
+                        backgroundColor: AppColor.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -92,7 +91,7 @@ class AppliedScreen extends StatelessWidget {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Colors.blue.shade400,
+                        backgroundColor: AppColor.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -106,7 +105,7 @@ class AppliedScreen extends StatelessWidget {
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        backgroundColor: Colors.blue.shade400,
+                        backgroundColor: AppColor.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -178,7 +177,7 @@ class AppliedScreen extends StatelessWidget {
                                   Column(
                                     children: [
                                       Text(
-                                        "3-6 lpa",
+                                        "3-6 LPA",
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
 import 'package:get/get.dart';
@@ -64,7 +65,7 @@ class VacancyController extends GetxController {
 
   subHeading(String subheading) {
     return Padding(
-      padding: EdgeInsets.only(left: width * 0.05),
+      padding: EdgeInsets.only(left: AppSize.width * 0.05),
       child: Text(
         subheading,
         style:
@@ -85,7 +86,7 @@ class VacancyController extends GetxController {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 1,
-            backgroundColor: Colors.blue.shade400,
+            backgroundColor: AppColor.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),

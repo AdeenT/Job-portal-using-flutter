@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/create_vacancy/controller/create_vacancy_controller.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,7 @@ class CreateVacancyScreen extends StatelessWidget {
             Get.back();
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          color: Colors.blue.shade400,
+          color: AppColor.primary,
         ),
       ),
       body: GetBuilder<VacancyController>(
@@ -36,30 +37,30 @@ class CreateVacancyScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.textField("Position", controller.positionController,
                     TextInputType.text, "Job role"),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.textField("Salary", controller.salaryController,
                     TextInputType.number, "Annual salary LPA eg: 5 "),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.textField("Location ", controller.locationController,
                     TextInputType.text, "Location"),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.textField("Type ", controller.typeController,
                     TextInputType.text, "Full time, part time etc..."),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.textField(
                     "Company Name",
@@ -67,15 +68,15 @@ class CreateVacancyScreen extends StatelessWidget {
                     TextInputType.text,
                     "Company Name"),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.jobDescriptionBox(),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
                 controller.button(),
                 SizedBox(
-                  height: height * 0.03,
+                  height: AppSize.height * 0.03,
                 ),
               ],
             ),

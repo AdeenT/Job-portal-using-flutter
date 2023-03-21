@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/utils/logger.dart';
 import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
@@ -21,12 +20,12 @@ class MainPage extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasData) {
-              log('auth stream has data');
+              Logger.success('auth stream has data');
               return FutureBuilder(
                   future: isRoleExist(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      log('isRoleExists Completed');
+                      Logger.success('isRoleExists Completed');
                       if (snapshot.data == 'noRole') {
                         return SelectionScreen();
                       } else if (snapshot.data == 'seeker') {

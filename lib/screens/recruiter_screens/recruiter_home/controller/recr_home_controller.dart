@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/create_vacancy/view/create_vacany.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class RecruiterHomeScreenController extends GetxController {
     FirebaseAuth.instance.signOut();
   }
 
-  jobCard (
+  jobCard(
     List<QueryDocumentSnapshot<Map<String, dynamic>>> jobList,
     int length,
   ) {
@@ -32,10 +33,9 @@ class RecruiterHomeScreenController extends GetxController {
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.only(top: 6),
       itemBuilder: (context, index) {
-         final vacancyModel = VacancyModel.fromJson(jobList[index].data());
+        final vacancyModel = VacancyModel.fromJson(jobList[index].data());
         return GestureDetector(
-          onTap: () {
-          },
+          onTap: () {},
           child: Padding(
             padding: EdgeInsets.only(
               left: width * 0.05,
@@ -115,7 +115,7 @@ class RecruiterHomeScreenController extends GetxController {
                               ],
                             ),
                             Text(
-                              "${vacancyModel.salary} lpa",
+                              "${vacancyModel.salary} LPA",
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class RecruiterHomeScreenController extends GetxController {
       onPressed: () {},
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: Colors.blue.shade400,
+        backgroundColor: AppColor.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -170,7 +170,7 @@ class RecruiterHomeScreenController extends GetxController {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: 1,
-        backgroundColor: Colors.blue.shade400,
+        backgroundColor: AppColor.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/core/global.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -158,7 +158,7 @@ class SignUpController extends GetxController {
                 color: Colors.red.withGreen(60),
               ),
               SizedBox(
-                width: width * 0.02,
+                width: AppSize.width * 0.02,
               ),
               Text(
                 text,

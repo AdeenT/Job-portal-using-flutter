@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/screens/login_and_signup/controllers/login_controller.dart';
 import 'package:flutter_application_1/screens/login_and_signup/signup_page.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,7 @@ class LoginPage extends StatelessWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Colors.blue.shade400,
+                      backgroundColor: AppColor.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -125,7 +126,6 @@ class LoginPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       controller.onGoogleSignInClicked();
-                      
                     },
                     child: Image.network(
                       "https://png.monster/wp-content/uploads/2020/11/Google-Amblem-7c49bdf3.png",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_description/controller/recruiter_description_controller.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,7 @@ class RecruiterDescription extends StatelessWidget {
             Get.back();
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
-          color: Colors.blue.shade400,
+          color: AppColor.primary,
         ),
       ),
     );
