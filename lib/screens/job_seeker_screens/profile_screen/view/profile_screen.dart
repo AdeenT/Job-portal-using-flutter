@@ -1,25 +1,40 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/models/seeker_model.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/edit_profile_screen.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/upload_cv_screen.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/edit_profile/edit_profile.dart';
 import 'package:flutter_application_1/screens/settings_screen/view/settings_screen.dart';
+import 'package:flutter_application_1/widgets/Text/text.dart';
+import 'package:flutter_application_1/widgets/container/container.dart';
+import 'package:flutter_application_1/widgets/spacing/spacing.dart';
 import 'package:get/get.dart';
-
 import 'package:flutter_application_1/core/constants/app_size.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
+
+  final seekerDp = ''.obs;
 
   @override
   Widget build(BuildContext context) {
+    var currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    String resumeUrl = "";
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Profile",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
+        title: const JText(
+          text: "Profile",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
         ),
         elevation: 0,
         backgroundColor: Colors.white,
@@ -32,193 +47,185 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.blue.withOpacity(0.65),
             ),
             onPressed: () {
-              Get.to(SettingsScreen());
+              Get.to(const SettingsScreen());
             },
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                left: AppSize.width * 0.1,
-                top: AppSize.height * 0.05,
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: AppSize.height * 0.06,
-                    backgroundColor: Colors.blue.withOpacity(0.6),
-                    child: Icon(
-                      Icons.person,
-                      size: 50,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: AppSize.width * 0.05),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('seeker')
+            .doc(currentUserId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          {
+            if (!snapshot.hasData) return const SizedBox();
+          }
+          SeekerModel seekerModel = SeekerModel.fromMap(snapshot.data!.data()!);
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                JSpace.vertical(10.0),
+                Column(
+                  children: [
+                    Stack(
                       children: [
-                        Text(
-                          "Your Name",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                        CircleAvatar(
+                          radius: 55,
+                          backgroundImage: NetworkImage(
+                            seekerModel.seekerDpUrl.toString(),
+                          ),
                         ),
-                        SizedBox(
-                          height: AppSize.height * 0.005,
-                        ),
-                        Text(
-                          "example@example.com",
-                          style: TextStyle(fontSize: 13, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          height: AppSize.height * 0.005,
-                        ),
-                        Text(
-                          "Flutter Developer",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black.withOpacity(0.8)),
-                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: AppColor.primary),
+                            child: IconButton(
+                              onPressed: () async {
+                                ImagePicker imagePicker = ImagePicker();
+                                XFile? image = await imagePicker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (image != null) {
+                                  File profilePic = File(image.path);
+                                  seekerDp.value = await uploadDp(profilePic);
+                                  FirebaseFirestore.instance
+                                      .collection('seeker')
+                                      .doc(currentUserId)
+                                      .update({'seekerDpUrl': seekerDp.value});
+                                }
+                              },
+                              icon: const Icon(Icons.camera_alt_rounded),
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: AppSize.height * 0.05,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: AppSize.width * 0.11),
-              child: Text(
-                "Full Name",
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Full Name",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                  ],
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: AppSize.width * 0.11),
-              child: Text(
-                "Email",
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "example@gmail.com",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                JSpace.vertical(50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.to(UploadCV());
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.blue.withOpacity(0.6),
+                        ),
+                      ),
+                      child: const Text(
+                        "Upload CV",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    JSpace.horizontal(50),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.to( EditProfile(seekerModel: seekerModel,));
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.blue.withOpacity(0.6),
+                        ),
+                      ),
+                      child: const Text(
+                        "Edit Profile",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: AppSize.width * 0.11),
-              child: Text(
-                "DOB",
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "DD/MM/YYYY",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                JSpace.vertical(20),
+                jSubHeading("Name"),
+                jTextFields(seekerModel.seekerName),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: AppSize.width * 0.11),
-              child: Text(
-                "Address",
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Kerala,India",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                jSubHeading("Email"),
+                jTextFields(seekerModel.seekerEmail),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: AppSize.width * 0.11),
-              child: Text(
-                "Occupation",
-                style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Flutter Developer",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                jSubHeading("Age"),
+                jTextFields(seekerModel.seekerAge),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.blue.withOpacity(0.6),
-                  ),
+                jSubHeading("Address"),
+                jTextFields(seekerModel.seekerAddress),
+                const SizedBox(
+                  height: 10,
                 ),
+                jSubHeading("occupation"),
+                jTextFields(seekerModel.seekerOccupation),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Padding jSubHeading(String subheading) {
+    return Padding(
+      padding: EdgeInsets.only(left: AppSize.width * 0.11, bottom: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            subheading,
+            style: const TextStyle(
+                color: Colors.black54, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding jTextFields(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 18.0,
+        right: 18,
+      ),
+      child: JContainer(
+        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromARGB(255, 230, 230, 230),
+        height: 50,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
                 child: Text(
-                  "Upload CV",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  text,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<String> uploadDp(File dP) async {
+    String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    var storageRef =
+        FirebaseStorage.instance.ref().child('seeker/dp/$currentUserId.jpg');
+    await storageRef.putFile(dP);
+    String seekerDp = await storageRef.getDownloadURL();
+    return seekerDp;
   }
 }

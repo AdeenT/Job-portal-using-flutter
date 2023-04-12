@@ -13,6 +13,8 @@ class CreateProfileController extends GetxController {
   final TextEditingController ageController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController occupationController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  String? imageUrl;
 
   textField(
     String label,
@@ -57,11 +59,18 @@ class CreateProfileController extends GetxController {
       seekerAge: ageController.text,
       seekerAddress: addressController.text,
       seekerOccupation: occupationController.text,
+      seekerEmail: emailController.text,
+      seekerDpUrl: imageUrl.toString(),
     );
 
-    await createSeeker(seeker);
-    onClose();
-    Get.off(NavBar());
+    if (imageUrl == null) {
+      Get.snackbar('No Image', 'please choose an image for the profile',
+          snackPosition: SnackPosition.BOTTOM);
+    } else {
+      await createSeeker(seeker);
+      onClose();
+      Get.off(NavBar());
+    }
   }
 
   Future createSeeker(SeekerModel seeker) async {

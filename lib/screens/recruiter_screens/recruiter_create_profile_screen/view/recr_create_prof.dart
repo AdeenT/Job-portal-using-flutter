@@ -1,14 +1,20 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_create_profile_screen/controller/recrter_create_prof_controller.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RecruiterCreateProfile extends StatelessWidget {
   RecruiterCreateProfile({super.key});
   final controller = Get.put(RecruiterCreateProfileController());
   @override
   Widget build(BuildContext context) {
+    RxString imageUrl = " ".obs;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -35,6 +41,56 @@ class RecruiterCreateProfile extends StatelessWidget {
                     height: AppSize.height * 0.025,
                   ),
                   controller.subHeading("Let's create your profile"),
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black45),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Center(
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            height: 120,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image(
+                                image: imageUrl == " "
+                                    ? const NetworkImage(
+                                        "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/person-profile-image-icon.png")
+                                    : NetworkImage(imageUrl.toString()),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: AppColor.primary,
+                              ),
+                              child: IconButton(
+                                  onPressed: () async {
+                                    ImagePicker imagePicker = ImagePicker();
+                                    XFile? image = await imagePicker.pickImage(
+                                        source: ImageSource.gallery);
+                                    if (image != null) {
+                                      File profilePic = File(image.path);
+                                      imageUrl.value =
+                                          await uploadDp(profilePic);
+                                    }
+                                  },
+                                  icon: const Icon(Icons.camera_alt_rounded)),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: AppSize.height * 0.025,
                   ),
@@ -102,5 +158,15 @@ class RecruiterCreateProfile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<String> uploadDp(File dP) async {
+    String currentUserId = FirebaseAuth.instance.currentUser!.uid;
+    var storageRef =
+        FirebaseStorage.instance.ref().child('recruite/dp/$currentUserId.jpg');
+    await storageRef.putFile(dP);
+    String seekerDp = await storageRef.getDownloadURL();
+    controller.imageUrl = seekerDp.toString();
+    return seekerDp;
   }
 }

@@ -1,6 +1,15 @@
-// ignore_for_file: prefer_const_constructors
+import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
+import 'package:flutter_application_1/core/utils/logger.dart';
+import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/job_details_screen/view/job_details.dart';
+import 'package:flutter_application_1/widgets/container/container.dart';
+import 'package:flutter_application_1/widgets/spacing/spacing.dart';
 import 'package:get/get.dart';
 
 class SavedJobs extends StatelessWidget {
@@ -8,11 +17,10 @@ class SavedJobs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = Get.size.height;
-    final width = Get.size.width;
+    var userId = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Saved Jobs",
           style: TextStyle(
             fontSize: 20,
@@ -31,115 +39,159 @@ class SavedJobs extends StatelessWidget {
               color: Colors.blue.withOpacity(0.65),
             ),
             onPressed: () {
-              // do something
             },
           )
         ],
       ),
       body: SingleChildScrollView(
-        child: ListView.separated(
+          child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('SavedJobs')
+            .doc(userId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          var savedJobsList = snapshot.data!.data()!['savedJobs'];
+          
+            if (savedJobsList.isNotEmpty) {
+            return ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(top: 6),
+              shrinkWrap: true,
+              itemCount: savedJobsList.length,
+              itemBuilder: (context, index) {
+                // var savedJobsCollectionRefs = FirebaseFirestore.instance
+                //     .collection('SavedJobs')
+                //     .doc(userId);
+                return getSavedJobList(userId);
+              },
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      )),
+    );
+  }
+
+  getSavedJobList(
+      user) {
+    return FutureBuilder(
+      future: FirebaseFirestore.instance
+                    .collection('SavedJobs')
+                    .doc(user).get(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const SizedBox();
+        }
+        log(user);
+        Logger.info(snapshot.data!.data()!['savedJobs'].toString());
+        var savedJobList = snapshot.data!.data()!['savedJobs'];
+        
+        return ListView.separated(
+          itemCount: savedJobList!.length,
+          separatorBuilder: (context, index) => const Divider(
+            color: Colors.transparent,
+          ),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(top: 6),
+          padding: EdgeInsets.only(bottom: AppSize.width * 0.03),
           itemBuilder: (context, index) {
+            VacancyModel addSavedJobs =
+                VacancyModel.fromJson(savedJobList[index]);
             return GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: width * 0.05,
-                  right: width * 0.05,
+              onTap: () {
+                Get.to(JobDetailsScreen(
+                  currentJobId: savedJobList[index].id,
+                  vacancyModel: addSavedJobs,
+                ));
+              },
+              child: JContainer(
+                margin: EdgeInsets.symmetric(
+                  horizontal: AppSize.width * 0.05,
                 ),
-                child: Material(
-                  elevation: 1,
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                elevation: 1,
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.white,
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Container(
+                          color: Colors.orange,
+                          height: 75,
+                          width: 75,
+                          child: const Center(
+                            child: Text("logo"),
+                          ),
+                        ),
+                        JSpace.horizontal(10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                addSavedJobs.position,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              JSpace.vertical(10),
+                              Text(
+                                addSavedJobs.companyName,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              JSpace.vertical(10),
+                              Text(
+                                "${addSavedJobs.location} - ${addSavedJobs.type}",
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        JSpace.horizontal(10),
+                        Column(
                           children: [
-                            Container(
-                              color: Colors.orange,
-                              height: 100,
-                              width: 100,
-                              child: Center(
-                                child: Text("logo"),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.bookmark_rounded,
+                                size: 30,
+                                color: AppColor.primary,
                               ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "UI/UX Designer",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: height * 0.01,
-                                ),
-                                Text(
-                                  "AirBNB",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: height * 0.01,
-                                ),
-                                Text(
-                                  "India - Full Time",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.bookmark_outlined,
-                                        size: 25,
-                                        color: Colors.blue.withOpacity(0.4),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  "3-6 LPA",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blue.withOpacity(0.5),
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              "${addSavedJobs.salary} LPA",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue.withOpacity(0.5),
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
             );
           },
-          itemCount: 5,
-          separatorBuilder: (context, index) => const Divider(
-            color: Colors.transparent,
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

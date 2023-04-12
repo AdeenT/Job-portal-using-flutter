@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/widgets/get_job_details.dart';
+import 'package:flutter_application_1/widgets/container/container.dart';
+import 'package:flutter_application_1/widgets/spacing/spacing.dart';
 import 'package:get/get.dart';
 
 class ShowJobListWidget extends StatelessWidget {
@@ -32,32 +34,29 @@ class ShowJobListWidget extends StatelessWidget {
             Get.to(RecruiterJobDetailsScreen(
                 vacancyModel: vacancyModel, currentJobId: jobList[index].id));
           },
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: AppSize.width * 0.05,
-              right: AppSize.width * 0.05,
-            ),
-            child: Material(
-              elevation: 1,
-              borderRadius: BorderRadius.circular(25),
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          color: Colors.orange,
-                          height: 100,
-                          width: 100,
-                          child: const Center(
-                            child: Text("logo"),
-                          ),
+          child: JContainer(
+            margin: EdgeInsets.symmetric(horizontal: AppSize.width * 0.05),
+            elevation: 1,
+            borderRadius: BorderRadius.circular(25),
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        color: Colors.orange,
+                        height: 75,
+                        width: 75,
+                        child: const Center(
+                          child: Text("logo"),
                         ),
-                        Column(
+                      ),
+                      JSpace.horizontal(10),
+                      Expanded(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -66,21 +65,14 @@ class ShowJobListWidget extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
-                            ),
-                            SizedBox(
-                              height: AppSize.height * 0.01,
-                            ),
+                            ),JSpace.vertical(10),
                             Text(
-                              vacancyModel.companyName.capitalizeFirst
-                                  .toString(),
+                              vacancyModel.companyName.capitalizeFirst.toString(),
                               style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                               ),
-                            ),
-                            SizedBox(
-                              height: AppSize.height * 0.01,
-                            ),
+                            ),JSpace.vertical(10),
                             Text(
                               "${vacancyModel.location.capitalizeFirst} - ${vacancyModel.type.capitalizeFirst}",
                               style: const TextStyle(
@@ -89,41 +81,42 @@ class ShowJobListWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      backgroundColor:
-                                          Colors.green.withOpacity(0.4),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
+                      ),
+                      JSpace.vertical(10),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor:
+                                        Colors.green.withOpacity(0.4),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
                                     ),
-                                    child: const Text(
-                                      "Active",
-                                      style: TextStyle(color: Colors.green),
-                                    )),
-                              ],
+                                  ),
+                                  child: const Text(
+                                    "Active",
+                                    style: TextStyle(color: Colors.green),
+                                  )),
+                            ],
+                          ),
+                          Text(
+                            "${vacancyModel.salary} LPA",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue.withOpacity(0.5),
                             ),
-                            Text(
-                              "${vacancyModel.salary} LPA",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.withOpacity(0.5),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

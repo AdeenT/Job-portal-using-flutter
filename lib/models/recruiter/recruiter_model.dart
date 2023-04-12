@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class RecruiterModel {
@@ -7,6 +6,7 @@ class RecruiterModel {
   String recruiterAddress;
   String recruiterPlace;
   String recruiterDate;
+  String recruiterDp;
 
   RecruiterModel({
     required this.recruiterName,
@@ -14,6 +14,7 @@ class RecruiterModel {
     required this.recruiterAddress,
     required this.recruiterPlace,
     required this.recruiterDate,
+    required this.recruiterDp,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +24,7 @@ class RecruiterModel {
       'recruiterAddress': recruiterAddress,
       'recruiterPlace': recruiterPlace,
       'recruiterDate': recruiterDate,
+      'recruiterDp': recruiterDp,
     };
   }
 
@@ -33,6 +35,7 @@ class RecruiterModel {
       recruiterAddress: map['recruiterAddress'] as String,
       recruiterPlace: map['recruiterPlace'] as String,
       recruiterDate: map['recruiterDate'] as String,
+      recruiterDp: map['recruiterDp'] as String,
     );
   }
 

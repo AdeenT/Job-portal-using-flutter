@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
+import 'package:flutter_application_1/models/recruiter/recruiter_model.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/navbar/recruiter_navbar.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
 import 'package:get/get.dart';
 
@@ -107,7 +110,15 @@ class VacancyController extends GetxController {
   }
 
   void onPostJobClicked() async {
+    var currentUser = FirebaseAuth.instance.currentUser!.uid;
+    var jobDocRef = FirebaseFirestore.instance
+        .collection("recruiter")
+        .doc(currentUser)
+        .collection('vacancies')
+        .doc();
+
     final jobPost = VacancyModel(
+      jobId: jobDocRef.id,
       recruiterId: FirebaseAuth.instance.currentUser!.uid,
       companyName: companyController.text,
       position: positionController.text,
@@ -124,7 +135,7 @@ class VacancyController extends GetxController {
     locationController.clear();
     typeController.clear();
     jobDescriptionController.clear();
-    Get.off(() => RecruiterHomePage());
+    Get.off(() => RecruiterNavBar());
   }
 
   Future postJob(VacancyModel jobDetails) async {

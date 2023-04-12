@@ -91,8 +91,9 @@ class RecruiterHomePage extends StatelessWidget {
                       return const Center(
                           child: Text("You haven't posted any vacancies"));
                     } else if (jobList.isNotEmpty) {
-                      return ShowJobListWidget(length: jobList.length, jobList: jobList);
-                    }else{
+                      return ShowJobListWidget(
+                          length: jobList.length, jobList: jobList);
+                    } else {
                       return const SizedBox();
                     }
                   },
@@ -105,5 +106,3 @@ class RecruiterHomePage extends StatelessWidget {
     );
   }
 }
-
-

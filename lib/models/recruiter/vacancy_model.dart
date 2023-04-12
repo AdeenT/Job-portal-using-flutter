@@ -10,6 +10,7 @@ class VacancyModel {
   String companyName;
   String createdTime;
   String? recruiterId;
+  String jobId;
 
   VacancyModel({
     required this.position,
@@ -20,6 +21,7 @@ class VacancyModel {
     required this.companyName,
     required this.createdTime,
     required this.recruiterId,
+    required this.jobId,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class VacancyModel {
       'companyName': companyName,
       'createdTime': createdTime,
       'recruiterId': recruiterId,
+      'jobId': jobId,
     };
   }
 
@@ -44,6 +47,7 @@ class VacancyModel {
         createdTime: json['createdTime'],
         type: json['type'],
         recruiterId: json['recruiterId'],
+        jobId: json['jobId'],
       );
 
   String toJson() => json.encode(toMap());

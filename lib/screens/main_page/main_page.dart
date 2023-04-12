@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/utils/logger.dart';
-import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
-import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
+import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/navbar/recruiter_navbar.dart';
 import 'package:flutter_application_1/screens/selection_screen/view/selection_screen.dart';
 
 class MainPage extends StatelessWidget {
@@ -31,7 +31,7 @@ class MainPage extends StatelessWidget {
                       } else if (snapshot.data == 'seeker') {
                         return NavBar();
                       } else {
-                        return RecruiterHomePage();
+                        return RecruiterNavBar();
                       }
                     } else {
                       return const Center(child: CircularProgressIndicator());

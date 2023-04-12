@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/view_resume.dart';
+import 'package:flutter_application_1/widgets/spacing/spacing.dart';
+import 'package:flutter_application_1/widgets/text/data_text.dart';
 import 'package:get/get.dart';
 
 class GetJobDetailController extends GetxController {
@@ -187,6 +190,11 @@ class GetJobDetailController extends GetxController {
   appliedUsers(
     String name,
     String occupation,
+    String image,
+    String address,
+    String email,
+    String age,
+    String resumeUrl
   ) {
     return Padding(
       padding: EdgeInsets.only(
@@ -204,7 +212,9 @@ class GetJobDetailController extends GetxController {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(maxRadius: 40),
+                  CircleAvatar(
+                      maxRadius: 40,
+                      backgroundImage: NetworkImage(image.toString())),
                   SizedBox(
                     width: AppSize.width * 0.05,
                   ),
@@ -243,7 +253,9 @@ class GetJobDetailController extends GetxController {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(ResumeViewPage(resumeUrl: resumeUrl));
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 1,
                       backgroundColor: AppColor.primary,
@@ -254,7 +266,10 @@ class GetJobDetailController extends GetxController {
                     child: const Text("See Resume"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      appliedUserDetails(
+                          name, age, email, occupation, address, image);
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 1,
                       backgroundColor: Colors.white,
@@ -276,5 +291,35 @@ class GetJobDetailController extends GetxController {
         ),
       ),
     );
+  }
+
+
+  appliedUserDetails(String name, String age, String email, String occupation,
+      String address, String profilepic) {
+    Get.bottomSheet(Container(
+      height: 250.0,
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundImage: NetworkImage(profilepic.toString()),
+            maxRadius: 40,
+          ),
+          JSpace.vertical(30),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: JDataText(rows: [
+              JDataTextRow(label: 'name', value: name),
+              JDataTextRow(label: 'age', value: age),
+              JDataTextRow(label: 'email', value: email),
+              JDataTextRow(label: 'address', value: address),
+              JDataTextRow(label: 'occupation', value: occupation),
+              
+            ],),
+          )
+        ],
+      ),
+    ));
   }
 }

@@ -12,11 +12,11 @@ class NavBarController extends GetxController {
       case 0:
         return HomeScreen();
       case 1:
-        return const AppliedScreen();
+        return  AppliedScreen();
       case 2:
         return const SavedJobs();
       case 3:
-        return const ProfileScreen();
+        return  ProfileScreen();
       default:
         return HomeScreen();
     }

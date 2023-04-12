@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/view/recruiter_home_page.dart';
+import 'package:flutter_application_1/screens/recruiter_screens/navbar/recruiter_navbar.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_application_1/core/constants/app_size.dart';
@@ -13,6 +13,7 @@ class RecruiterCreateProfileController extends GetxController {
   final TextEditingController addressController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
+  String imageUrl = ' ';
 
   textField(
     String label,
@@ -58,17 +59,21 @@ class RecruiterCreateProfileController extends GetxController {
       recruiterAddress: addressController.text,
       recruiterPlace: countryController.text,
       recruiterDate: dateController.text,
+      recruiterDp: imageUrl.toString(),
     );
-    createSeeker(recruiter);
+    if (imageUrl != ' ') {
+      createRecruiter(recruiter);
 
-    Get.off(RecruiterHomePage());
+      Get.off(RecruiterNavBar());
+    } else {
+      Get.snackbar('No Image', 'please choose an image for the profile',
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 
-  Future createSeeker(RecruiterModel seeker) async {
+  Future createRecruiter(RecruiterModel recruiter) async {
     String userUID = FirebaseAuth.instance.currentUser!.uid;
-    final docSeeker = FirebaseFirestore.instance.collection("recruiter");
-    docSeeker.doc(userUID).set(({
-          "user details": {seeker.toMap()}
-        }));
+    final docRecruiter = FirebaseFirestore.instance.collection("recruiter");
+    docRecruiter.doc(userUID).update(recruiter.toMap());
   }
 }

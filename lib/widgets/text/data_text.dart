@@ -37,7 +37,7 @@ class JDataText extends StatelessWidget {
 
   Widget _buildSingleLine() {
     return Table(
-      columnWidths: {
+      columnWidths: const {
         0: IntrinsicColumnWidth(),
         1: FlexColumnWidth(),
       },
@@ -92,7 +92,7 @@ class JDataText extends StatelessWidget {
       children: List.generate(visibleList.length, (index) {
         JDataTextRow row = visibleList[index];
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -129,7 +129,7 @@ class JDataText extends StatelessWidget {
 
   JText _buildValueText(JDataTextRow row) {
     return JText(
-      text: "${row.value}",
+      text: row.value,
       fontSize: fontSize,
       fontWeight: valueFontWeight,
       color: row.color ?? color,

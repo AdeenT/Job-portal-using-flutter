@@ -1,15 +1,16 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
-import 'package:flutter_application_1/core/utils/logger.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/home_screen/controller/home_screen_controller.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/job_details_screen/view/job_details.dart';
 import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
+import 'package:flutter_application_1/widgets/Text/text.dart';
 import 'package:flutter_application_1/widgets/container/container.dart';
 import 'package:flutter_application_1/widgets/spacing/spacing.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,11 @@ class HomeScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: userName("User"),
+            title: const JText(
+              text: 'Hello User',
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
             elevation: 0.0,
             backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
@@ -37,11 +42,11 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.only(left: 16),
+                          padding: const EdgeInsets.only(left: 16),
                           child: CupertinoTextField(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             prefix: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: const EdgeInsets.only(left: 10),
                               child: Icon(
                                 CupertinoIcons.search,
                                 color: Colors.grey.shade600,
@@ -201,17 +206,6 @@ class HomeScreen extends StatelessWidget {
                             JSpace.horizontal(10),
                             Column(
                               children: [
-                                InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Icon(
-                                      Icons.bookmark_border_rounded,
-                                      size: 25,
-                                      color: Colors.blue.withOpacity(0.4),
-                                    ),
-                                  ),
-                                ),
                                 Text(
                                   "${addJobModel.salary} LPA",
                                   style: TextStyle(
@@ -230,17 +224,6 @@ class HomeScreen extends StatelessWidget {
                 );
               });
         });
-  }
-
-  userName(String name) {
-    return Text(
-      "Hello, $name!",
-      style: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: Colors.black,
-      ),
-    );
   }
 
   Widget jobCategory(String category) {

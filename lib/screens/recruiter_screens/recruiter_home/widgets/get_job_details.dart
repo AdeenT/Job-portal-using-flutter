@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
-import 'package:flutter_application_1/core/utils/logger.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/controller/get_job_details_controller.dart';
 import 'package:flutter_application_1/widgets/text/text.dart';
@@ -118,10 +117,14 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
                             return const CircularProgressIndicator();
                           }
                           return controller.appliedUsers(
-                              snapshot.data!.get('seekerName').toString(),
-                              snapshot.data!
-                                  .get('seekerOccupation')
-                                  .toString());
+                            snapshot.data!.get('seekerName').toString(),
+                            snapshot.data!.get('seekerOccupation').toString(),
+                            snapshot.data!.get('seekerDpUrl').toString(),
+                            snapshot.data!.get('seekerAddress').toString(),
+                            snapshot.data!.get('seekerEmail').toString(),
+                            snapshot.data!.get('seekerAge').toString(),
+                            snapshot.data!.get('cv'),
+                          );
                         },
                       );
                     },

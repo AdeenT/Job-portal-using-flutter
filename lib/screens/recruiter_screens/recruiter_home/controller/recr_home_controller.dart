@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/create_vacancy/view/create_vacany.dart';
+import 'package:flutter_application_1/widgets/button/button.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -167,21 +169,15 @@ class RecruiterHomeScreenController extends GetxController {
   }
 
   createVacancyButton() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        elevation: 1,
-        backgroundColor: AppColor.primary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-      ),
-      onPressed: () {
+    return JButton(
+      onPress: () {
         Get.to(CreateVacancyScreen());
       },
-      child: const Text(
-        "Create Vacancy",
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
+      elevation: 1,
+      text: 'Create Vacancy',
+      backgroundColor: AppColor.primary,
+      height: 50,
+      width: AppSize.width * 0.8,
     );
   }
 
