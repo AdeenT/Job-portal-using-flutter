@@ -39,7 +39,7 @@ class AppliedJobsController extends GetxController {
           left: width * 0.05,
           right: width * 0.05,
         ),
-        child: Material(
+        child: JContainer(
           elevation: 1,
           borderRadius: BorderRadius.circular(25),
           color: Colors.white,

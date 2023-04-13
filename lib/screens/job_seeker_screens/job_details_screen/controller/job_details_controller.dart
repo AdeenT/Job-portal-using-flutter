@@ -151,9 +151,9 @@ class JobDetailController extends GetxController {
                         ])
                       },
                     );
-                    applyButtonClicked(userID, currentJobId);
+                    applyButtonClicked(userID, currentJobId, vacancyModel);
                   },
-                  text: applyingButton ,
+                  text: applyingButton,
                 ),
               );
       },
@@ -182,20 +182,36 @@ class JobDetailController extends GetxController {
     Logger.info('Checking whether the user is applied or not');
   }
 
-  applyButtonClicked(String userId, String currentJobId) async {
+  applyButtonClicked(
+      String userId, String currentJobId, VacancyModel vacancyModel) async {
     var appliedUsers =
         FirebaseFirestore.instance.collection("AppliedUsers").doc(userId);
     var appliedUsersSnapshot = await appliedUsers.get();
+
     if (appliedUsersSnapshot.exists) {
       await appliedUsers.update({
         'appliedJobs': FieldValue.arrayUnion([
-          {"JobId": currentJobId, 'status': "pending"}
+          {
+            "JobId": currentJobId,
+            'status': "pending",
+            'JobTitle': vacancyModel.position,
+            'companyName': vacancyModel.companyName,
+            'JobSalary': vacancyModel.salary,
+            'JobLocation': vacancyModel.location,
+          }
         ])
       });
     } else {
       appliedUsers.set({
         'appliedJobs': FieldValue.arrayUnion([
-          {"JobId": currentJobId, 'status': "pending"}
+          {
+            "JobId": currentJobId,
+            'status': "pending",
+            'JobTitle': vacancyModel.position,
+            'companyName': vacancyModel.companyName,
+            'JobSalary': vacancyModel.salary,
+            'JobLocation': vacancyModel.location,
+          }
         ])
       });
     }
