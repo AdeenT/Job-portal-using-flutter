@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
@@ -146,13 +145,15 @@ class JobDetailController extends GetxController {
                         .update(
                       {
                         'applied': FieldValue.arrayUnion([
-                          {'uid': userID, 'appliedTime': DateTime.now()}
+                          {
+                            'uid': userID,
+                          }
                         ])
                       },
                     );
                     applyButtonClicked(userID, currentJobId);
                   },
-                  text: applyingButton == 'notApplied' ? "Apply" : "Applied",
+                  text: applyingButton ,
                 ),
               );
       },
@@ -165,21 +166,17 @@ class JobDetailController extends GetxController {
     var appliedUsers =
         FirebaseFirestore.instance.collection('AppliedUsers').doc(userID);
     var appliedUsersRef = await appliedUsers.get();
-    if (!appliedUsersRef.exists) {
-      Logger.success('user not applied the job');
-      update();
-      return;
-    }
+
     List<dynamic> appliedJobIds = appliedUsersRef.get('appliedJobs');
     if (appliedJobIds
-        .where((element) => element.toString() == currentJobId)
+        .where((element) => element["JobId"] == currentJobId)
         .isNotEmpty) {
       Logger.success('user applied the job');
-      applyingButton = "applied";
+      applyingButton = "Applied";
       update();
     } else {
       Logger.success('user not applied the job');
-      applyingButton;
+      applyingButton = "Apply";
       update();
     }
     Logger.info('Checking whether the user is applied or not');
@@ -191,11 +188,15 @@ class JobDetailController extends GetxController {
     var appliedUsersSnapshot = await appliedUsers.get();
     if (appliedUsersSnapshot.exists) {
       await appliedUsers.update({
-        'appliedJobs': FieldValue.arrayUnion([currentJobId])
+        'appliedJobs': FieldValue.arrayUnion([
+          {"JobId": currentJobId, 'status': "pending"}
+        ])
       });
     } else {
       appliedUsers.set({
-        'appliedJobs': FieldValue.arrayUnion([currentJobId])
+        'appliedJobs': FieldValue.arrayUnion([
+          {"JobId": currentJobId, 'status': "pending"}
+        ])
       });
     }
 

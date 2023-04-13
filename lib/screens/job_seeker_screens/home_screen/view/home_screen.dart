@@ -10,7 +10,6 @@ import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/home_screen/controller/home_screen_controller.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/job_details_screen/view/job_details.dart';
 import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
-import 'package:flutter_application_1/widgets/Text/text.dart';
 import 'package:flutter_application_1/widgets/container/container.dart';
 import 'package:flutter_application_1/widgets/spacing/spacing.dart';
 import 'package:get/get.dart';
@@ -24,11 +23,7 @@ class HomeScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const JText(
-              text: 'Hello User',
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+            title: userName("User"),
             elevation: 0.0,
             backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
@@ -226,6 +221,17 @@ class HomeScreen extends StatelessWidget {
         });
   }
 
+  userName(String name) {
+    return Text(
+      "Hello, $name!",
+      style: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: Colors.black,
+      ),
+    );
+  }
+
   Widget jobCategory(String category) {
     return ElevatedButton(
       onPressed: () {},
@@ -243,5 +249,33 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> bookmarkClicked(VacancyModel addJobModel) async {
+    String currentUserID = FirebaseAuth.instance.currentUser!.uid;
+
+    var appliedJobsRef = await FirebaseFirestore.instance
+        .collection('SavedJobs')
+        .doc(currentUserID)
+        .get();
+    if (appliedJobsRef.exists) {
+      FirebaseFirestore.instance
+          .collection('SavedJobs')
+          .doc(currentUserID)
+          .update({
+        'savedJobs': FieldValue.arrayUnion([
+          {addJobModel.toJson()}
+        ])
+      });
+    } else {
+      FirebaseFirestore.instance
+          .collection('SavedJobs')
+          .doc(currentUserID)
+          .set({
+        'savedJobs': FieldValue.arrayUnion([
+          {addJobModel.toJson()}
+        ])
+      });
+    }
   }
 }
