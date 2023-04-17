@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
+import 'package:flutter_application_1/screens/job_seeker_screens/home_screen/controller/home_screen_controller.dart';
+import 'package:flutter_application_1/screens/login_and_signup/login_page.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
+  SettingsScreen({super.key});
+  final controller = Get.put(HomeScreenController());
   @override
   Widget build(BuildContext context) {
     final height = Get.size.height;
@@ -82,7 +84,10 @@ class SettingsScreen extends StatelessWidget {
               title: const Text('Exit'),
               tileColor: Colors.blue.withOpacity(0.05),
               iconColor: Colors.red.withOpacity(0.6),
-              onTap: () => {},
+              onTap: () async {
+                await controller.logout();
+                Get.offAll(LoginPage());
+              },
             ),
           ],
         ),

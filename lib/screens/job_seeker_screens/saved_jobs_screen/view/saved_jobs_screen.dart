@@ -5,12 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
-import 'package:flutter_application_1/core/utils/logger.dart';
-import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
-import 'package:flutter_application_1/screens/job_seeker_screens/job_details_screen/view/job_details.dart';
+import 'package:flutter_application_1/models/seeker/saved_jobs.dart';
 import 'package:flutter_application_1/widgets/container/container.dart';
 import 'package:flutter_application_1/widgets/spacing/spacing.dart';
-import 'package:get/get.dart';
 
 class SavedJobs extends StatelessWidget {
   const SavedJobs({super.key});
@@ -31,23 +28,13 @@ class SavedJobs extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.chat,
-              size: 30,
-              color: Colors.blue.withOpacity(0.65),
-            ),
-            onPressed: () {
-            },
-          )
-        ],
       ),
       body: SingleChildScrollView(
           child: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('SavedJobs')
+            .collection('seeker')
             .doc(userId)
+            .collection('SavedJobs')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -56,23 +43,16 @@ class SavedJobs extends StatelessWidget {
             );
           }
 
-          var savedJobsList = snapshot.data!.data()!['savedJobs'];
-          
-            if (savedJobsList.isNotEmpty) {
-            return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(top: 6),
-              shrinkWrap: true,
-              itemCount: savedJobsList.length,
-              itemBuilder: (context, index) {
-                // var savedJobsCollectionRefs = FirebaseFirestore.instance
-                //     .collection('SavedJobs')
-                //     .doc(userId);
-                return getSavedJobList(userId);
-              },
+          var savedJobsList = snapshot.data!.docs;
+
+          if (savedJobsList.isNotEmpty) {
+            return getSavedJobList(
+              userId,
             );
           } else {
-            return const SizedBox();
+            return const Center(
+              child: Text("You don't have any saved jobs"),
+            );
           }
         },
       )),
@@ -80,21 +60,23 @@ class SavedJobs extends StatelessWidget {
   }
 
   getSavedJobList(
-      user) {
+    user,
+  ) {
     return FutureBuilder(
       future: FirebaseFirestore.instance
-                    .collection('SavedJobs')
-                    .doc(user).get(),
+          .collection('seeker')
+          .doc(user)
+          .collection('SavedJobs')
+          .get(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();
         }
         log(user);
-        Logger.info(snapshot.data!.data()!['savedJobs'].toString());
-        var savedJobList = snapshot.data!.data()!['savedJobs'];
-        
+        var savedJobsId = snapshot.data!.docs;
+        log(savedJobsId[0].data().toString());
         return ListView.separated(
-          itemCount: savedJobList!.length,
+          itemCount: savedJobsId.length,
           separatorBuilder: (context, index) => const Divider(
             color: Colors.transparent,
           ),
@@ -102,91 +84,90 @@ class SavedJobs extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(bottom: AppSize.width * 0.03),
           itemBuilder: (context, index) {
-            VacancyModel addSavedJobs =
-                VacancyModel.fromJson(savedJobList[index]);
+            Bookmark addSavedJobs = Bookmark.fromMap(savedJobsId[index].data());
             return GestureDetector(
-              onTap: () {
-                Get.to(JobDetailsScreen(
-                  currentJobId: savedJobList[index].id,
-                  vacancyModel: addSavedJobs,
-                ));
-              },
-              child: JContainer(
-                margin: EdgeInsets.symmetric(
-                  horizontal: AppSize.width * 0.05,
-                ),
-                elevation: 1,
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.white,
-                padding: const EdgeInsets.all(14.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+              onTap: () {},
+              child: Column(
+                children: [
+                  JSpace.vertical(10),
+                  JContainer(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: AppSize.width * 0.05,
+                    ),
+                    elevation: 1,
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(14.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          color: Colors.orange,
-                          height: 75,
-                          width: 75,
-                          child: const Center(
-                            child: Text("logo"),
-                          ),
-                        ),
-                        JSpace.horizontal(10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                addSavedJobs.position,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              JSpace.vertical(10),
-                              Text(
-                                addSavedJobs.companyName,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              JSpace.vertical(10),
-                              Text(
-                                "${addSavedJobs.location} - ${addSavedJobs.type}",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        JSpace.horizontal(10),
-                        Column(
+                        Row(
                           children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.bookmark_rounded,
-                                size: 30,
-                                color: AppColor.primary,
+                            Container(
+                                color: Colors.white,
+                                height: 75,
+                                width: 75,
+                                child: Image.network(
+                                  addSavedJobs.companyLogo,
+                                  fit: BoxFit.cover,
+                                )),
+                            JSpace.horizontal(10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    addSavedJobs.title,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  JSpace.vertical(10),
+                                  Text(
+                                    addSavedJobs.companyName,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  JSpace.vertical(10),
+                                  Text(
+                                    "${addSavedJobs.location} - ${addSavedJobs.type}",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              "${addSavedJobs.salary} LPA",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue.withOpacity(0.5),
-                              ),
+                            JSpace.horizontal(10),
+                            Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.bookmark_rounded,
+                                    size: 22,
+                                    color: AppColor.tertiary,
+                                  ),
+                                ),
+                                Text(
+                                  "${addSavedJobs.salary} LPA",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue.withOpacity(0.5),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },

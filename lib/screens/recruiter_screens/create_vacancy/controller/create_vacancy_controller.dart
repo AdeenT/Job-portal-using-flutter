@@ -77,7 +77,7 @@ class VacancyController extends GetxController {
     );
   }
 
-  button() {
+  button(RecruiterModel recruiterModel) {
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,
@@ -95,7 +95,7 @@ class VacancyController extends GetxController {
             ),
           ),
           onPressed: () {
-            onPostJobClicked();
+            onPostJobClicked(recruiterModel);
           },
           child: const Text(
             "Post Job",
@@ -109,7 +109,7 @@ class VacancyController extends GetxController {
     );
   }
 
-  void onPostJobClicked() async {
+  void onPostJobClicked(RecruiterModel recruiterModel) async {
     var currentUser = FirebaseAuth.instance.currentUser!.uid;
     var jobDocRef = FirebaseFirestore.instance
         .collection("recruiter")
@@ -127,6 +127,7 @@ class VacancyController extends GetxController {
       type: typeController.text,
       description: jobDescriptionController.text,
       createdTime: DateTime.now().toString(),
+      companyLogo: recruiterModel.recruiterDp,
     );
     await postJob(jobPost);
     companyController.clear();

@@ -11,6 +11,7 @@ class VacancyModel {
   String createdTime;
   String? recruiterId;
   String jobId;
+  String companyLogo;
 
   VacancyModel({
     required this.position,
@@ -22,6 +23,7 @@ class VacancyModel {
     required this.createdTime,
     required this.recruiterId,
     required this.jobId,
+    required this.companyLogo,
   });
 
   Map<String, dynamic> toMap() {
@@ -35,20 +37,21 @@ class VacancyModel {
       'createdTime': createdTime,
       'recruiterId': recruiterId,
       'jobId': jobId,
+      'companyLogo': companyLogo
     };
   }
 
   factory VacancyModel.fromJson(Map<String, dynamic> json) => VacancyModel(
-        description: json['description'],
-        salary: json['salary'],
-        companyName: json['companyName'],
-        location: json['location'],
-        position: json['position'],
-        createdTime: json['createdTime'],
-        type: json['type'],
-        recruiterId: json['recruiterId'],
-        jobId: json['jobId'],
-      );
+      description: json['description'],
+      salary: json['salary'],
+      companyName: json['companyName'],
+      location: json['location'],
+      position: json['position'],
+      createdTime: json['createdTime'],
+      type: json['type'],
+      recruiterId: json['recruiterId'],
+      jobId: json['jobId'],
+      companyLogo: json['companyLogo']);
 
   String toJson() => json.encode(toMap());
 }

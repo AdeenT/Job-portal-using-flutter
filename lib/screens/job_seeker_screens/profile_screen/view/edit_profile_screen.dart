@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/utils/logger.dart';
-import 'package:flutter_application_1/models/seeker_model.dart';
+import 'package:flutter_application_1/models/seeker/seeker_model.dart';
 import 'package:flutter_application_1/widgets/Text/text.dart';
 import 'package:flutter_application_1/widgets/button/button.dart';
 import 'package:flutter_application_1/widgets/spacing/spacing.dart';

@@ -1,14 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
-import 'package:flutter_application_1/core/utils/logger.dart';
-import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/applied_jobs_screen/controllers/applied_jobs_controller.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/home_screen/controller/home_screen_controller.dart';
 import 'package:flutter_application_1/widgets/container/container.dart';
@@ -16,26 +9,22 @@ import 'package:flutter_application_1/widgets/spacing/spacing.dart';
 import 'package:flutter_application_1/widgets/text/text.dart';
 import 'package:get/get.dart';
 
-// ignore: must_be_immutable
 class AppliedScreen extends StatelessWidget {
   AppliedScreen({super.key});
 
-  HomeScreenController homeScreenController = Get.put(HomeScreenController());
+  final homeScreenController = Get.put(HomeScreenController());
   final appliedController = Get.put(AppliedJobsController());
   @override
   Widget build(BuildContext context) {
     var currentUserId = FirebaseAuth.instance.currentUser!.uid;
-    final height = Get.size.height;
     final width = Get.size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Applied Jobs",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
+        title: const JText(
+          text: "Applied Jobs",
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.black,
         ),
         elevation: 0,
         backgroundColor: Colors.white,
@@ -58,8 +47,9 @@ class AppliedScreen extends StatelessWidget {
 
                   List<dynamic> appliedJobIds =
                       snapshot.data!.get('appliedJobs');
+
                   if (appliedJobIds.isEmpty) {
-                    return const Text("Error");
+                    return const Text("Youve'nt Applied to any jobs");
                   } else {
                     return ListView.separated(
                         itemCount: appliedJobIds.length,
@@ -86,12 +76,12 @@ class AppliedScreen extends StatelessWidget {
                                   Row(
                                     children: [
                                       Container(
-                                        color: Colors.orange,
+                                        color: Colors.white,
                                         height: 75,
                                         width: 75,
-                                        child: const Center(
-                                          child: Text("logo"),
-                                        ),
+                                        child: Image.network(
+                                            appliedJobIds[index]['companyLogo'],
+                                            fit: BoxFit.cover),
                                       ),
                                       JSpace.horizontal(10),
                                       Expanded(
@@ -146,7 +136,7 @@ class AppliedScreen extends StatelessWidget {
                                         style: ElevatedButton.styleFrom(
                                           elevation: 0,
                                           backgroundColor:
-                                              Colors.orange.withOpacity(0.2),
+                                              Colors.blue.withOpacity(0.2),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(30),
@@ -156,7 +146,7 @@ class AppliedScreen extends StatelessWidget {
                                         child: Text(
                                           appliedJobIds[index]['status'],
                                           style: TextStyle(
-                                              color: Colors.orange.shade300,
+                                              color: Colors.blue.shade300,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
+import 'package:flutter_application_1/models/recruiter/recruiter_model.dart';
 import 'package:flutter_application_1/screens/recruiter_screens/create_vacancy/controller/create_vacancy_controller.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +13,7 @@ class CreateVacancyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -74,7 +78,19 @@ class CreateVacancyScreen extends StatelessWidget {
                 SizedBox(
                   height: AppSize.height * 0.03,
                 ),
-                controller.button(),
+                StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('recruiter')
+                        .doc(currentUser)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      {
+                        if (!snapshot.hasData) return const SizedBox();
+                      }
+                      RecruiterModel recruiterModel =
+                          RecruiterModel.fromMap(snapshot.data!.data()!);
+                          return controller.button(recruiterModel);
+                    }),
                 SizedBox(
                   height: AppSize.height * 0.03,
                 ),

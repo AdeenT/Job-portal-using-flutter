@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/seeker_model.dart';
+import 'package:flutter_application_1/models/seeker/seeker_model.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/controllers/resume_controller.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/view_resume.dart';
 import 'package:flutter_application_1/widgets/button/button.dart';

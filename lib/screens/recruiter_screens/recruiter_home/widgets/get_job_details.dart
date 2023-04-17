@@ -9,6 +9,8 @@ import 'package:flutter_application_1/screens/recruiter_screens/recruiter_home/c
 import 'package:flutter_application_1/widgets/text/text.dart';
 import 'package:get/get.dart';
 
+import '../controller/recr_home_controller.dart';
+
 class RecruiterJobDetailsScreen extends StatelessWidget {
   RecruiterJobDetailsScreen({
     super.key,
@@ -17,6 +19,7 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
   });
 
   final controller = Get.put(GetJobDetailController());
+  final homeScreenController = Get.put(RecruiterHomeScreenController());
   final VacancyModel vacancyModel;
   final String currentJobId;
 
@@ -48,7 +51,8 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              controller.jobCard(vacancyModel),
+              controller.jobCard(
+                  vacancyModel,),
               const Padding(
                 padding: EdgeInsets.all(18.0),
                 child: Divider(
@@ -130,7 +134,8 @@ class RecruiterJobDetailsScreen extends StatelessWidget {
                                 snapshot.data!.get('seekerAge').toString(),
                                 snapshot.data!.get('cv'),
                                 currentJobId,
-                                appliedUsersList[index]);
+                                appliedUsersList[index],
+                                vacancyModel);
                           },
                         );
                       },

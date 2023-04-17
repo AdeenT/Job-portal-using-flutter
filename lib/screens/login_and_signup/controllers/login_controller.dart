@@ -1,10 +1,8 @@
-// ignore_for_file: avoid_print
-
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/core/utils/logger.dart';
 import 'package:flutter_application_1/screens/main_page/main_page.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -37,7 +35,7 @@ class LoginController extends GetxController {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (e) {
-      print(e.toString());
+      Logger.error(e);
     }
     update();
     Get.off(const MainPage());
@@ -106,11 +104,12 @@ class LoginController extends GetxController {
         .toList();
     if (matchingUsers.isNotEmpty) {
       log('user exists');
+      update();
       if (matchingUsers.first.data()['Auth']['password'] ==
           passwordController.text) {
         log(passwordController.text);
         log('sign in success');
-
+        update();
         await signIn();
       } else {
         Get.snackbar(

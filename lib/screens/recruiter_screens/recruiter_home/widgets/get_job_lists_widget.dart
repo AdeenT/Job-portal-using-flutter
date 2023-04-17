@@ -32,7 +32,9 @@ class ShowJobListWidget extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             Get.to(RecruiterJobDetailsScreen(
-                vacancyModel: vacancyModel, currentJobId: jobList[index].id));
+              vacancyModel: vacancyModel,
+              currentJobId: jobList[index].id,
+            ));
           },
           child: JContainer(
             margin: EdgeInsets.symmetric(horizontal: AppSize.width * 0.05),
@@ -47,11 +49,12 @@ class ShowJobListWidget extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        color: Colors.orange,
+                        color: Colors.white,
                         height: 75,
                         width: 75,
-                        child: const Center(
-                          child: Text("logo"),
+                        child: Image.network(
+                          vacancyModel.companyLogo,
+                          fit: BoxFit.cover,
                         ),
                       ),
                       JSpace.horizontal(10),
@@ -65,14 +68,17 @@ class ShowJobListWidget extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
-                            ),JSpace.vertical(10),
+                            ),
+                            JSpace.vertical(10),
                             Text(
-                              vacancyModel.companyName.capitalizeFirst.toString(),
+                              vacancyModel.companyName.capitalizeFirst
+                                  .toString(),
                               style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                               ),
-                            ),JSpace.vertical(10),
+                            ),
+                            JSpace.vertical(10),
                             Text(
                               "${vacancyModel.location.capitalizeFirst} - ${vacancyModel.type.capitalizeFirst}",
                               style: const TextStyle(

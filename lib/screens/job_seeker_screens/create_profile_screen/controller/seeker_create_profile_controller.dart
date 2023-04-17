@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/navbar/view/navbar.dart';
 import 'package:get/get.dart';
-import '../../../../models/seeker_model.dart';
+import '../../../../models/seeker/seeker_model.dart';
 
 class CreateProfileController extends GetxController {
   final TextEditingController nameController = TextEditingController();

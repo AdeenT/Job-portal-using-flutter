@@ -133,7 +133,8 @@ class AppliedJobsController extends GetxController {
     );
   }
 
-  jobCard(CollectionReference<Map<String, dynamic>> vacancieCollectionRef) {
+  jobCard(CollectionReference<Map<String, dynamic>> vacancieCollectionRef,
+      String companyLogo) {
     return FutureBuilder(
         future: vacancieCollectionRef.get(),
         builder: (context, snapshot) {

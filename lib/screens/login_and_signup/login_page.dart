@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
                 controller.passwordController,
                 "Password",
                 TextInputType.text,
-                false,
+                true,
                 (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter a password";
@@ -84,8 +84,9 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () async {
-                      await controller.onSignInButtonClicked();
+                    onPressed: () async{
+                     await controller.onSignInButtonClicked();
+                      controller.update();
                     },
                     child: const Text(
                       "Sign in",

@@ -14,7 +14,7 @@ class RecruiterNavBar extends StatelessWidget {
         bottomNavigationBar: Container(
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(15),
             child: GNav(
               padding: const EdgeInsets.all(9),
               backgroundColor: Colors.white,
@@ -29,6 +29,9 @@ class RecruiterNavBar extends StatelessWidget {
                 GButton(
                   icon: Icons.home,
                   text: "Home",
+                ),GButton(
+                  icon: Icons.check_circle,
+                  text: "Accepted",
                 ),
                 GButton(
                   icon: Icons.person_pin,

@@ -43,7 +43,7 @@ class RecruiterProfileScreen extends StatelessWidget {
               color: Colors.blue.withOpacity(0.65),
             ),
             onPressed: () {
-              Get.to(const SettingsScreen());
+              Get.to( SettingsScreen());
             },
           )
         ],

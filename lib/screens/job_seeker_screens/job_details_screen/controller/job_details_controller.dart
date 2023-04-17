@@ -15,7 +15,9 @@ import 'package:get/get.dart';
 class JobDetailController extends GetxController {
   String applyingButton = "notApplied";
 
-  jobCard(VacancyModel vacancyModel) {
+  jobCard(
+    VacancyModel vacancyModel,
+  ) {
     return JContainer(
       margin: EdgeInsets.only(
         top: AppSize.height * 0.05,
@@ -28,12 +30,13 @@ class JobDetailController extends GetxController {
       padding: const EdgeInsets.all(15.0),
       child: Row(
         children: [
-          const JContainer(
-            color: Colors.orange,
+          JContainer(
+            color: Colors.white,
             height: 75,
             width: 75,
-            child: Center(
-              child: Text("Logo"),
+            child: Image.network(
+              vacancyModel.companyLogo,
+              fit: BoxFit.cover,
             ),
           ),
           JSpace.horizontal(20),
@@ -198,6 +201,7 @@ class JobDetailController extends GetxController {
             'companyName': vacancyModel.companyName,
             'JobSalary': vacancyModel.salary,
             'JobLocation': vacancyModel.location,
+            'companyLogo': vacancyModel.companyLogo,
           }
         ])
       });
@@ -211,6 +215,7 @@ class JobDetailController extends GetxController {
             'companyName': vacancyModel.companyName,
             'JobSalary': vacancyModel.salary,
             'JobLocation': vacancyModel.location,
+            'companyLogo': vacancyModel.companyLogo,
           }
         ])
       });

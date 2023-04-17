@@ -1,15 +1,12 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
-import 'package:flutter_application_1/models/seeker_model.dart';
+import 'package:flutter_application_1/models/seeker/seeker_model.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/edit_profile_screen.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/upload_cv_screen.dart';
-import 'package:flutter_application_1/screens/recruiter_screens/edit_profile/edit_profile.dart';
 import 'package:flutter_application_1/screens/settings_screen/view/settings_screen.dart';
 import 'package:flutter_application_1/widgets/Text/text.dart';
 import 'package:flutter_application_1/widgets/container/container.dart';
@@ -47,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
               color: Colors.blue.withOpacity(0.65),
             ),
             onPressed: () {
-              Get.to(const SettingsScreen());
+              Get.to(SettingsScreen());
             },
           )
         ],
@@ -129,7 +126,9 @@ class ProfileScreen extends StatelessWidget {
                     JSpace.horizontal(50),
                     ElevatedButton(
                       onPressed: () {
-                        Get.to( EditProfile(seekerModel: seekerModel,));
+                        Get.to(EditProfile(
+                          seekerModel: seekerModel,
+                        ));
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(

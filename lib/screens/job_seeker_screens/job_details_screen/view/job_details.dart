@@ -44,7 +44,7 @@ class JobDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            controller.jobCard(vacancyModel),
+            controller.jobCard(vacancyModel ),
             const Padding(
               padding: EdgeInsets.all(18.0),
               child: Divider(

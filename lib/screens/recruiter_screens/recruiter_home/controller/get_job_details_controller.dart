@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/constants/app_color.dart';
 import 'package:flutter_application_1/core/constants/app_size.dart';
+import 'package:flutter_application_1/models/recruiter/accepted_model.dart';
 import 'package:flutter_application_1/models/recruiter/vacancy_model.dart';
 import 'package:flutter_application_1/screens/job_seeker_screens/profile_screen/view/view_resume.dart';
 import 'package:flutter_application_1/widgets/container/container.dart';
@@ -13,7 +14,9 @@ import 'package:get/get.dart';
 class GetJobDetailController extends GetxController {
   String applyingButton = "notApplied";
 
-  jobCard(VacancyModel vacancyModel) {
+  jobCard(
+    VacancyModel vacancyModel,
+  ) {
     return Padding(
       padding: EdgeInsets.only(
         top: AppSize.height * 0.05,
@@ -32,13 +35,13 @@ class GetJobDetailController extends GetxController {
               Row(
                 children: [
                   Container(
-                    color: Colors.orange,
-                    height: 75,
-                    width: 75,
-                    child: const Center(
-                      child: Text("logo"),
-                    ),
-                  ),
+                      color: Colors.white,
+                      height: 75,
+                      width: 75,
+                      child: Image.network(
+                        vacancyModel.companyLogo,
+                        fit: BoxFit.cover,
+                      )),
                   SizedBox(
                     width: AppSize.width * 0.05,
                   ),
@@ -191,15 +194,17 @@ class GetJobDetailController extends GetxController {
   }
 
   appliedUsers(
-      String name,
-      String occupation,
-      String image,
-      String address,
-      String email,
-      String age,
-      String resumeUrl,
-      String currentJobId,
-      Map<String, dynamic> appliedUsers) {
+    String name,
+    String occupation,
+    String image,
+    String address,
+    String email,
+    String age,
+    String resumeUrl,
+    String currentJobId,
+    Map<String, dynamic> appliedUsers,
+    VacancyModel vacancyModel,
+  ) {
     var currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
     return Padding(
@@ -318,12 +323,8 @@ class GetJobDetailController extends GetxController {
                       appliedUserss.set({'appliedJobs': newList});
 
                       // for creating a new collection for accepted users
-                      var acceptedUsersRefs = FirebaseFirestore.instance
-                          .collection('recruiter')
-                          .doc(currentUserId)
-                          .collection('acceptedUsers')
-                          .doc(currentJobId);
-                      acceptedUsersRefs.set({"id": appliedUsers['uid']});
+                      acceptingUser(name, occupation, email,
+                          vacancyModel.position, image, resumeUrl);
 
                       // deleting the user details from the applied candidate section after accepting
 
@@ -412,5 +413,26 @@ class GetJobDetailController extends GetxController {
         ),
       ),
     );
+  }
+
+  acceptingUser(String name, String occupation, String email, String jobName,
+      String photo, String resume) async {
+    var currentUser = FirebaseAuth.instance.currentUser!.uid;
+    var acceptedUserRef = FirebaseFirestore.instance
+        .collection("recruiter")
+        .doc(currentUser)
+        .collection('acceptedUsers')
+        .doc();
+
+    final acceptUser = AcceptedModel(
+        candidateCv: resume,
+        candidateName: name,
+        candidateOccupation: occupation,
+        candidateEmail: email,
+        candidateAppliedJob: jobName,
+        candidatePhoto: photo,
+        createdTime: DateTime.now().toString());
+
+    await acceptedUserRef.set(acceptUser.toMap());
   }
 }
